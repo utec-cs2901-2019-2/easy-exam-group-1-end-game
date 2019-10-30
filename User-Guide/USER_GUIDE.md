@@ -51,7 +51,7 @@ As a teacher, EasyExam provides you exercises so you save time in  designing and
 * Review exercises
 
 
-## **[User Stories](https://github.com/JoseChavez98/private-easy-exam-grupo-uno/blob/master/User-Guide/USER_STORIES.md)**
+## **[User Stories](https://github.com/utec-cs2901-2019-2/easy-exam-group-1-end-game/blob/master/User-Guide/USER_STORIES.md)**
 
 
 ## **Use Cases**
