@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="1476.0" y="-22.5">com.company.easyexam.service.UserServiceImpl</node>
+    <node x="860.0" y="1734.0">com.company.easyexam.repository.QuestionRepository</node>
+    <node x="374.5" y="1389.5">com.company.easyexam.web.QuestionController</node>
+    <node x="1877.5" y="482.0">com.company.easyexam.mapper.UserService</node>
+    <node x="618.0" y="457.5">com.company.easyexam.web.UserController</node>
+    <node x="990.0" y="181.0">com.company.easyexam.model.User</node>
+    <node x="437.5" y="1085.5">com.company.easyexam.web.LoginController</node>
+    <node x="1230.5" y="1374.0">com.company.easyexam.EasyExamApplication</node>
+    <node x="-22.0" y="1710.0">com.company.easyexam.mapper.QuestionService</node>
+    <node x="651.5" y="2.0">com.company.easyexam.repository.UserRepository</node>
+    <node x="413.0" y="1577.0">com.company.easyexam.model.Question</node>
+    <node x="418.0" y="2017.5">com.company.easyexam.service.QuestionServiceImpl</node>
+    <node x="-4.0" y="909.5">com.company.easyexam.service.CustomUserDetailsService</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.company.easyexam.web.LoginController" target="com.company.easyexam.model.User">
+      <point x="202.5" y="0.0" />
+      <point x="1120.0" y="1160.0" />
+      <point x="-80.0" y="339.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.UserServiceImpl" target="com.company.easyexam.model.User">
+      <point x="0.0" y="62.5" />
+      <point x="1640.0" y="480.0" />
+      <point x="210.0" y="-40.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.QuestionServiceImpl" target="com.company.easyexam.repository.QuestionRepository">
+      <point x="182.0" y="0.0" />
+      <point x="1000.0" y="2080.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="com.company.easyexam.web.QuestionController" target="com.company.easyexam.repository.QuestionRepository">
+      <point x="225.5" y="0.0" />
+      <point x="1000.0" y="1440.0" />
+      <point x="0.0" y="-26.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.CustomUserDetailsService" target="com.company.easyexam.model.User">
+      <point x="0.0" y="50.5" />
+      <point x="160.0" y="1320.0" />
+      <point x="1200.0" y="1320.0" />
+      <point x="0.0" y="339.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.QuestionServiceImpl" target="com.company.easyexam.mapper.QuestionService">
+      <point x="-182.0" y="0.0" />
+      <point x="160.0" y="2080.0" />
+      <point x="0.0" y="50.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.QuestionServiceImpl" target="com.company.easyexam.model.Question">
+      <point x="0.0" y="-62.5" />
+      <point x="0.0" y="183.0" />
+    </edge>
+    <edge source="com.company.easyexam.web.UserController" target="com.company.easyexam.model.User">
+      <point x="142.0" y="0.0" />
+      <point x="-210.0" y="0.0" />
+    </edge>
+    <edge source="com.company.easyexam.web.QuestionController" target="com.company.easyexam.mapper.QuestionService">
+      <point x="-225.5" y="0.0" />
+      <point x="160.0" y="1440.0" />
+      <point x="0.0" y="-50.0" />
+    </edge>
+    <edge source="com.company.easyexam.repository.QuestionRepository" target="com.company.easyexam.model.Question">
+      <point x="-140.0" y="0.0" />
+      <point x="187.0" y="0.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.CustomUserDetailsService" target="com.company.easyexam.repository.UserRepository">
+      <point x="0.0" y="-50.5" />
+      <point x="160.0" y="40.0" />
+      <point x="-108.5" y="0.0" />
+    </edge>
+    <edge source="com.company.easyexam.repository.UserRepository" target="com.company.easyexam.model.User">
+      <point x="108.5" y="20.0" />
+      <point x="1200.0" y="60.0" />
+      <point x="0.0" y="-339.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.UserServiceImpl" target="com.company.easyexam.repository.UserRepository">
+      <point x="-164.0" y="0.0" />
+      <point x="108.5" y="0.0" />
+    </edge>
+    <edge source="com.company.easyexam.mapper.QuestionService" target="com.company.easyexam.model.Question">
+      <point x="182.0" y="0.0" />
+      <point x="-187.0" y="0.0" />
+    </edge>
+    <edge source="com.company.easyexam.service.UserServiceImpl" target="com.company.easyexam.mapper.UserService">
+      <point x="164.0" y="0.0" />
+      <point x="2000.0" y="40.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="com.company.easyexam.web.QuestionController" target="com.company.easyexam.model.Question">
+      <point x="0.0" y="50.5" />
+      <point x="0.0" y="-183.0" />
+    </edge>
+    <edge source="com.company.easyexam.mapper.UserService" target="com.company.easyexam.model.User">
+      <point x="-122.5" y="0.0" />
+      <point x="210.0" y="0.0" />
+    </edge>
+    <edge source="com.company.easyexam.web.UserController" target="com.company.easyexam.repository.UserRepository">
+      <point x="0.0" y="-62.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="com.company.easyexam.web.LoginController" target="com.company.easyexam.service.CustomUserDetailsService">
+      <point x="-202.5" y="0.0" />
+      <point x="200.0" y="1160.0" />
+      <point x="40.0" y="50.5" />
+    </edge>
+  </edges>
+  <settings layout="Orthogonal" zoom="0.23376029277218666" x="1050.5" y="1060.0" />
+  <SelectedNodes>
+    <node>com.company.easyexam.model.Question</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
