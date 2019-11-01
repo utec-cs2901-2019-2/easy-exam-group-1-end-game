@@ -1,38 +1,47 @@
 package com.company.easyexam.web;
 
+import com.company.easyexam.model.AuthenticationRequest;
+import com.company.easyexam.model.AuthenticationResponse;
+import com.company.easyexam.security.JwtTokenProvider;
+import com.company.easyexam.service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth")
 public class AuthController {
 
-    /*
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    UserRepository userRepository;
+    private MyUserDetailsService userDetailsService;
 
-    @Autowired
-    UserServiceImpl userService;
-
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthBody data){
-        try{
-            String username = data.getUserName();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-            String token = jwtTokenProvider.createToken(this.userRepository.findByUserName(username).getUserName());
-            Map<Object, Object> model = new HashMap<>();
-            model.put("username", username);
-            model.put("token", token);
-            return ok(model);
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email/password supplied");
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
+        throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect authentication ", e);
         }
-    }*/
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final String token = tokenProvider.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthenticationResponse(token));
+    }
+
+    @GetMapping("/")
+    public String helloWorld() { return "Hello World"; }
 }

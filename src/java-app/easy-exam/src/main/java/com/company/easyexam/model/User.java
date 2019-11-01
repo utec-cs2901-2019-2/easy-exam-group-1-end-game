@@ -22,6 +22,8 @@ public class User {
 
     public User() {}
 
+    public User(String userName, String password) {}
+
     public User(String email, String password, List<SimpleGrantedAuthority> authorities) {}
 
     public User(String name, String lastName, String userName, String email, String password, String university, String rol) {
