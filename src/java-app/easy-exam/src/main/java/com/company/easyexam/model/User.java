@@ -1,13 +1,11 @@
 package com.company.easyexam.model;
 
-import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.List;
 
-@Data
 @Document(collection = "User")
 public class User {
 
@@ -21,6 +19,8 @@ public class User {
     private String password;
     private String university;
     private String rol;
+
+    public User() {}
 
     public User(String email, String password, List<SimpleGrantedAuthority> authorities) {}
 

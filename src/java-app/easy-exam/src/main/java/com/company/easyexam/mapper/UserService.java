@@ -6,5 +6,4 @@ public interface UserService {
     public abstract void addUser(User user);
     public abstract User findUserByEmail(String email);
 
-
 }
