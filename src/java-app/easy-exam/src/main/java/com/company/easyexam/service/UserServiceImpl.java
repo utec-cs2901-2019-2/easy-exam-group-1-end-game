@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public User findUserName(String username) {
         return null;
     }
 

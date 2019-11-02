@@ -1,6 +1,7 @@
 package com.company.easyexam.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -11,10 +12,11 @@ public class User {
 
     private String name;
     private String lastName;
+    @Indexed(name = "userName",unique = true)
     private String userName;
 
     @Id
-    private String email;
+    private String id;
 
     private String password;
     private String university;
@@ -24,13 +26,20 @@ public class User {
 
     public User(String userName, String password) {}
 
-    public User(String email, String password, List<SimpleGrantedAuthority> authorities) {}
-
-    public User(String name, String lastName, String userName, String email, String password, String university, String rol) {
+    public User(String name, String lastName, String userName, String password, String university, String rol) {
         this.name = name;
         this.lastName = lastName;
         this.userName = userName;
-        this.email = email;
+        this.password = password;
+        this.university = university;
+        this.rol = rol;
+    }
+
+    public User(String name, String lastName, String userName, String id, String password, String university, String rol) {
+        this.name = name;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.id = id;
         this.password = password;
         this.university = university;
         this.rol = rol;
@@ -61,12 +70,12 @@ public class User {
         this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getId() {
+        return id;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPassword() {
