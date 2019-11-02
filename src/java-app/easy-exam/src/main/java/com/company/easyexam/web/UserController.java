@@ -5,10 +5,7 @@ import com.company.easyexam.model.User;
 import com.company.easyexam.repository.UserRepository;
 import com.company.easyexam.service.QuestionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/")
-    public String helloWorld() { return "Hello World"; }
+    @GetMapping("/{username}")
+    public User getUser(@PathVariable String username) { return userRepository.findByUserName(username); }
+
 }

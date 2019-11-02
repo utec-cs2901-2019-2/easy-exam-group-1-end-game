@@ -1,38 +1,77 @@
 package com.company.easyexam.web;
 
+import com.company.easyexam.model.AuthenticationRequest;
+import com.company.easyexam.model.AuthenticationResponse;
+import com.company.easyexam.model.RegisterRequest;
+import com.company.easyexam.model.User;
+import com.company.easyexam.repository.UserRepository;
+import com.company.easyexam.security.JwtTokenProvider;
+import com.company.easyexam.service.MyUserDetailsService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth")
 public class AuthController {
 
-    /*
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProvider tokenProvider;
 
     @Autowired
-    UserRepository userRepository;
+    private MyUserDetailsService userDetailsService;
 
     @Autowired
-    UserServiceImpl userService;
+    private UserRepository repository;
 
-    @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthBody data){
-        try{
-            String username = data.getUserName();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
-            String token = jwtTokenProvider.createToken(this.userRepository.findByUserName(username).getUserName());
-            Map<Object, Object> model = new HashMap<>();
-            model.put("username", username);
-            model.put("token", token);
-            return ok(model);
-        } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Invalid email/password supplied");
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getUsername(),
+                            authenticationRequest.getPassword()));
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+            final String token = tokenProvider.generateToken(userDetails);
+            return ResponseEntity.ok(new AuthenticationResponse(token));
+
+        } catch (BadCredentialsException e) {
+            System.out.println("Exception " + e);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-    }*/
+
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
+
+        User user =  new User(registerRequest.getName(),
+                registerRequest.getLastName(),
+                registerRequest.getUserName(),
+                registerRequest.getPassword(),
+                registerRequest.getUniversity(),
+                registerRequest.getRol());
+
+        try {
+            repository.save(user);
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUserName());
+            final String token = tokenProvider.generateToken(userDetails);
+            return ResponseEntity.ok(new AuthenticationResponse(token));
+
+        } catch (org.springframework.dao.DuplicateKeyException e) {
+            System.out.println("Exception : " + e);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }

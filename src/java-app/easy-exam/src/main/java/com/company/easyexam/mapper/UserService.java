@@ -4,6 +4,6 @@ import com.company.easyexam.model.User;
 
 public interface UserService {
     public abstract void addUser(User user);
-    public abstract User findUserByEmail(String email);
 
+    public abstract User findUserName(String username);
 }
