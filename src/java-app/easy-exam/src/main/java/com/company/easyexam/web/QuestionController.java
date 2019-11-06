@@ -1,33 +1,44 @@
 package com.company.easyexam.web;
 
+import com.company.easyexam.mapper.QuestionService;
 import com.company.easyexam.model.Question;
-import com.company.easyexam.service.QuestionServiceImpl;
-import org.springframework.data.annotation.Id;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.company.easyexam.model.Tags;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/question")
 public class QuestionController {
 
-    private QuestionServiceImpl questionServiceImpl;
+//    @Autowired
+//    private QuestionRepository questionRepository;
 
-    @GetMapping("/collection/{list}")
-    public List<Question> getCollectionOfQuestions(int size, List<String> tags){
-        return questionServiceImpl.getCollection(size,tags);
+    @Autowired
+    private QuestionService questionService;
+
+//    @Autowired
+//    private QuestionServiceImpl questionServiceImpl;
+
+
+//    @GetMapping("/exam/{tag1}/{tag2}")
+//    public List<Question> getCollectionOfQuestions(@PathVariable String tag1,@PathVariable String tag2){
+//
+//        List<String> tags = new ArrayList<>();
+//        tags.add(tag1);
+//        tags.add(tag2);
+//        List<Question> list;
+//        list = questionService.getCollection(2,tags);
+//        return list;
+//    }
+
+    @PostMapping("exam/{size}")
+//    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Question> getCollectionOfQuestions(@RequestBody final Tags tags, @PathVariable int size){
+        List<String> tagList = tags.getTags();
+        return questionService.getCollection(size,tagList);
     }
 
-    @GetMapping("/rate/{id}/{bool}")
-    public void rateQuestion(Integer rate, Id id){
-        questionServiceImpl.rateQuestion(rate,id);
-    }
-
-    @PostMapping("/post")
-    public void postQuestion(List<String> atributeList, List<String> tags){
-        questionServiceImpl.postQuestion(atributeList,tags);
-    }
 }
