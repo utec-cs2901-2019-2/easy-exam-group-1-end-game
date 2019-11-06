@@ -1,14 +1,17 @@
 package com.company.easyexam.model;
 
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+@Document(collection = "Question")
 public class Question {
 
     @Id
-    private int id;
+    private ObjectId id;
 
     private String description;
     private String answer;
@@ -17,8 +20,7 @@ public class Question {
 
 
 
-    public Question(int id, String description, String answer, String author, List<String> tags) {
-        this.id = id;
+    public Question( String description, String answer, String author, List<String> tags) {
         this.description = description;
         this.answer = answer;
         this.author = author;
@@ -29,11 +31,11 @@ public class Question {
 
     }
 
-    public int getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(ObjectId   id) {
         this.id = id;
     }
 

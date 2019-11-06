@@ -7,7 +7,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface QuestionRepository extends MongoRepository<Question,String> {
-    Question findByTags(List<String> tags);
-    Question findById(Id id);
-    Question save(Question question);
+    Question findQuestionsByTags(String tags);
+    List<Question> findQuestionsByTagsContaining(List<String> tags);
+
+
 }
