@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Home from './homeTeacher/home';
-import Submitquestion from './submitQuestion/submit_question';
-import DownloadPdf from './downloadExam/downloadPdf';
+import Teacher from './components/teacher';
+
 import Login from './login/Login'
 import SignUp from './signup/Signup'
 import PrivateRoute from './PrivateRoute'
@@ -33,13 +32,7 @@ export default function App() {
           <Route path="/signup">
             <SignUp/>
           </Route>
-          <PrivateRoute path="/home" component={Home} />
-          <Route path="/download">
-            <DownloadPdf/>
-          </Route>
-          <Route path="/submit">
-            <Submitquestion/>
-          </Route>
+          <PrivateRoute path="/home" component={Teacher} />
         </Switch>
     </Router>
     </AuthContext.Provider>
