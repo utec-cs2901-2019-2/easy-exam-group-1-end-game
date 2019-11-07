@@ -4,9 +4,6 @@ import Sendquestion from '../components/send_question';
 import Grid from '@material-ui/core/Grid';
 import Buttons from '../components/buttons'
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link
 } from "react-router-dom";
 

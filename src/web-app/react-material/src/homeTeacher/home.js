@@ -4,9 +4,6 @@ import Inputs from '../components/inputs';
 import Buttons from '../components/buttons';
 import Grid from '@material-ui/core/Grid';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link
 } from "react-router-dom";
 

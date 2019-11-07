@@ -3,9 +3,10 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
-import { Link } from "react-router-dom";
-import {Login} from "../auth/AuthService"
+import { Link, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
+import axios from 'axios';
+import { useAuth } from "../auth/auth";
 
 const useStyles = makeStyles({
     general: {
@@ -17,20 +18,42 @@ const useStyles = makeStyles({
 export default props => {
 
     const classes = useStyles();
-    const[user, setUser] = useState({usernameOrEmail:'', password: ''});
-    const onResponse = user => {
-        Login(user).then(r=> console.log(r.data))
+    const [user, setUser] = useState({username:'', password: ''});
+    const [isError, setIsError] = useState(false);
+    const { setAuthToken, isAuthenticated, authToken } = useAuth();
+
+    function postLogin () {
+        axios.post("http://localhost:8080/auth/login/", {
+            username: user.username,
+            password: user.password
+        }).then( result => {
+            if(result.status === 200) {
+                setAuthToken(result.data.token, true)
+            } else {
+                setIsError(true)
+            }
+        }).catch(e => {
+            setIsError(true)
+        });
+    }
+
+    if (isAuthenticated && authToken) {
+        return <Redirect to="/home" />;
+    }
+
+    if (isError) {
+        return <Redirect to="/login" />;
     }
 
     return (
     <Container maxWidth="sm">
         <Box>Easy Exam - Login</Box>
         <Box><TextField
-            id="usernameOrEmail"
+            id="username"
             label="Username or Email"
             margin="normal"
-            value={user.usernameOrEmail}
-            onInput={e => setUser({usernameOrEmail: e.target.value, password: user.password})}
+            value={user.username}
+            onInput={e => setUser({username: e.target.value, password: user.password})}
             className={classes.general}
             /></Box>
         <Box>
@@ -40,14 +63,14 @@ export default props => {
             type="password"
             margin="normal"
             value={user.password}
-            onInput={e => setUser({usernameOrEmail: user.usernameOrEmail, password: e.target.value})}
+            onInput={e => setUser({username: user.username, password: e.target.value})}
             className={classes.general}
             />
         </Box>
-        <Box ><Button className={classes.general} color="primary" variant="contained" onClick={()=>onResponse(user)} >Login</Button></Box>
+        <Box ><Button className={classes.general} color="primary" variant="contained" onClick={postLogin} >Login</Button></Box>
         <Box ><Link to="/signup"><Button className={classes.general} variant="contained" >Sign Up</Button></Link></Box>
         <Box ><Button className={classes.general}>Forget your password?</Button></Box>
-        <Box>{user.usernameOrEmail} {user.password}</Box>
+        <Box>{user.username} {user.password}</Box>
     </Container>
         )
 }
