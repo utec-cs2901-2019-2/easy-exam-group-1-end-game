@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Home from './homeTeacher/home';
 import Submitquestion from './submitQuestion/submit_question';
 import DownloadPdf from './downloadExam/downloadPdf';
 import Login from './login/Login'
 import SignUp from './signup/Signup'
+import PrivateRoute from './PrivateRoute'
+import { AuthContext } from './auth/auth'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  Redirect
+  Route
 } from "react-router-dom";
 
 export default function App() {
+
+  const [authToken, setAuthToken] = useState()
+  const [isAuthenticated, setAuthentication] = useState()
+
+  const setToken = (data, bool) => {
+    localStorage.setItem("token", data);
+    setAuthToken(data);
+    setAuthentication(bool);
+  }
+
   return (
+    <AuthContext.Provider value={{authToken, isAuthenticated, setAuthToken: setToken}}>
     <Router>
-      <div>
-      <Redirect from="/" to="/login"/>
         <Switch>
           <Route path="/login">
             <Login />
@@ -24,17 +33,15 @@ export default function App() {
           <Route path="/signup">
             <SignUp/>
           </Route>
+          <PrivateRoute path="/home" component={Home} />
           <Route path="/download">
             <DownloadPdf/>
           </Route>
           <Route path="/submit">
             <Submitquestion/>
           </Route>
-          <Route path="/home">
-            <Home/>
-          </Route>
         </Switch>
-      </div>
     </Router>
+    </AuthContext.Provider>
   );
 }
