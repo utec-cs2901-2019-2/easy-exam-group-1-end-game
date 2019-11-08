@@ -34,8 +34,7 @@ public class QuestionController {
 //        return list;
 //    }
 
-    @PostMapping("exam/{size}")
-//    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value = "/exam/{size}", method = RequestMethod.POST)
     public List<Question> getCollectionOfQuestions(@RequestBody final Tags tags, @PathVariable int size){
         List<String> tagList = tags.getTags();
         return questionService.getCollection(size,tagList);

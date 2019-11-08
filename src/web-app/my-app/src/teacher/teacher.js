@@ -9,23 +9,38 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import ExamInfo from './examInfo';
-import SubmitQuestions from './submitQuestions';
-import ReviewDownload from './reviewDownload';
+import ExamInfo from './ExamInfo';
+import SubmitQuestions from './SubmitQuestions';
+import ReviewDownload from './ReviewDownload';
 import axios from 'axios';
 
-const ListOfTags = () => {
-  return axios({
-    method: 'POST',
-    url: 'http://localhost:8080/question/exam/1',
-    headers : {
-      'Content-Type' : 'application/json',
-      'Authorization' : `Bearer ${localStorage.getItem('token')}`
-    },
-    data : {
+// ({
+//   method: 'POST',
+//   url: 'http://localhost:8080/question/exam/1',
+//   headers : {
+//     'Content-Type' : 'application/json',
+//     'Authorization' : `Bearer ${localStorage.getItem('token')}`
+//   },
+//   data : {
+//     "tags" : ["mate"]
+//   }
+// })
+  
+var postdata = {
       "tags" : ["mate"]
-    }
-  })
+}
+let config = {
+  headers : {
+        'Content-Type' : 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization' : `Bearer ${localStorage.getItem('token')}`
+      }
+}
+
+const ListOfTags = () => {
+  return axios.post('http://localhost:8080/question/exam/1', postdata, config).then( r => {
+    console.log(r);
+  });
 }
 
 const useStyles = makeStyles(theme => ({
@@ -87,9 +102,7 @@ export default function Checkout() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     //here we apply the tags
-    if(activeStep === 0){
-      console.log(ListOfTags());
-    }
+    ListOfTags();
   };
 
   const handleBack = () => {
