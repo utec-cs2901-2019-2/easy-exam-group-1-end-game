@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import ExamInfo from './examInfo';
 import SubmitQuestions from './submitQuestions';
 import ReviewDownload from './reviewDownload';
-import { ListOfTags } from '../auth/AuthService';
+import { ListOfTags } from '../context/AuthService';
 
 const useStyles = makeStyles(theme => ({
   appBar: {

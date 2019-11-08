@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 import { Link, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import axios from 'axios';
-import { useAuth } from "../auth/auth";
+import { AuthContext } from "../context/Auth";
 
 const useStyles = makeStyles({
     general: {
@@ -19,8 +19,7 @@ export default props => {
 
     const classes = useStyles();
     const [user, setUser] = useState({username:'', password: ''});
-    const [isError, setIsError] = useState(false);
-    const { setAuthToken, isAuthenticated, authToken } = useAuth();
+    const  { auth,setAuth }  = useContext(AuthContext);
 
     function postLogin () {
         axios.post("http://localhost:8080/auth/login/", {
@@ -28,21 +27,17 @@ export default props => {
             password: user.password
         }).then( result => {
             if(result.status === 200) {
-                setAuthToken(result.data.token, true)
-            } else {
-                setIsError(true)
+                // setAuthToken(result.data.token, true)
+                localStorage.setItem("token", result.data.token);
+                setAuth(true);
             }
         }).catch(e => {
-            setIsError(true)
+            console.log("problemas")
         });
     }
 
-    if (isAuthenticated && authToken) {
+    if (auth) {
         return <Redirect to="/home" />;
-    }
-
-    if (isError) {
-        return <Redirect to="/login" />;
     }
 
     return (
