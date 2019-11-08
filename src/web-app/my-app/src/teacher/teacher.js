@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import ExamInfo from './examInfo';
 import SubmitQuestions from './submitQuestions';
 import ReviewDownload from './reviewDownload';
-import { ListOfTags } from '../context/AuthService';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -73,14 +72,12 @@ export default function Checkout() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     //here we apply the tags
-    if(activeStep === 0){
-      console.log(ListOfTags());
-    }
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
 
   return (
     <React.Fragment>

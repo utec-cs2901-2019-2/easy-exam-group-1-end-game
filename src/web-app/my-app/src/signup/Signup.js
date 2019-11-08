@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField';
 import { Container } from '@material-ui/core';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default props => {
     return (
@@ -38,7 +38,7 @@ export default props => {
                     type="password"
                 />
             </Box>
-            <Box><Link to="/home"><Button variant="contained" color="primary">Sign Up</Button></Link></Box>
+            <Box><NavLink to="/home"><Button variant="contained" color="primary">Sign Up</Button></NavLink></Box>
         </Container>
     )
 }

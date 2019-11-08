@@ -1,5 +1,5 @@
 import React from 'react';
-import Teacher from './components/teacher';
+import Teacher from './teacher/teacher';
 
 import Login from './login/Login'
 import SignUp from './signup/Signup'
