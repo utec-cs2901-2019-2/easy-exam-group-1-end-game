@@ -2,17 +2,14 @@ package com.company.easyexam.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.bson.types.ObjectId;
-import org.springframework.data.util.Pair;
-
-import java.util.List;
 
 @JsonAutoDetect
 public class Rate {
 
     private ObjectId id;
-    private Long rating;
+    private Integer rating;
 
-    public Rate(ObjectId id, Long rating) {
+    public Rate(ObjectId id, Integer rating) {
         this.id = id;
         this.rating = rating;
     }
@@ -25,11 +22,11 @@ public class Rate {
         this.id = id;
     }
 
-    public Long getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Long rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 }

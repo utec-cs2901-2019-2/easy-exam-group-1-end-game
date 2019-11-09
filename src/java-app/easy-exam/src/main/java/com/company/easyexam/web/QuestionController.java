@@ -34,7 +34,7 @@ public class QuestionController {
     @PostMapping("rate")
     public void setRatings(@RequestBody final List<Rate> rates){
 
-        questionService.setRating(rates);
+        questionService.updateRating(rates);
     }
 
 

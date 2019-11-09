@@ -12,5 +12,5 @@ public interface QuestionService {
 
     public abstract List<Question> getCollectionForExam( int size ,List<String> tags);
     public abstract List<Question> getCollectionForChallenge( int size ,List<String> tags);
-    public abstract void setRating(List<Rate> rates);
+    public abstract void updateRating(List<Rate> rates);
 }

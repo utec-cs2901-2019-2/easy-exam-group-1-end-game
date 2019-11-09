@@ -5,9 +5,10 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.management.Query;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,15 +20,15 @@ public class Question {
 
     private String description;
     private String answer;
-    private Long rateTimes;
-    private Long rate;
+    private Integer rateTimes;
+    private Integer rate;
     private String author;
     private Date date;
     private List<String> tags;
 
 
 
-    public Question( String description, String answer,Long rateTimes,Long rate, String author,Date date, List<String> tags) {
+    public Question( String description, String answer,Integer rateTimes,Integer rate, String author,Date date, List<String> tags) {
         this.description = description;
         this.answer = answer;
         this.rateTimes=rateTimes;
@@ -41,17 +42,17 @@ public class Question {
 
     }
 
-    public Long getRateTimes() {
+    public Integer getRateTimes() {
         return rateTimes;
     }
 
-    public void setRateTimes(Long rateTimes) {
+    public void setRateTimes(Integer rateTimes) {
         this.rateTimes = rateTimes;
     }
 
-    public Long getRate() {return rate;}
+    public Integer getRate() {return rate;}
 
-    public void setRate(Long rate) {this.rate = rate;}
+    public void setRate(Integer rate) {this.rate = rate;}
 
     public Date getDate() {
         return date;
@@ -101,18 +102,12 @@ public class Question {
         this.author = author;
     }
 
-//    public void addRateTimes(){
-//        this.rateTimes= this.rateTimes+1;
-//    }
+    private void addRateTimes(){
+        this.rateTimes= this.rateTimes+1;
+    }
 
-    public void updateRate(Long rating){
-//        addRateTimes();
-        Long newAverage = this.rate + ((rating-this.rate)/this.rateTimes);
-
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("name").is("appleC"));
-//        query.fields().include("name");
-
-
+    public void updateRate(Integer rating){
+        addRateTimes();
+        this.rate= this.rate + ((rating- this.rate)/ this.rateTimes);
     }
 }

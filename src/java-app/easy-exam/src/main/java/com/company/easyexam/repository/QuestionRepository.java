@@ -11,5 +11,4 @@ public interface QuestionRepository extends MongoRepository<Question,String> {
     Question findQuestionsById(ObjectId id);
     List<Question> findQuestionsByTagsContaining(List<String> tags);
 
-
 }
