@@ -2,7 +2,9 @@ package com.company.easyexam.web;
 
 import com.company.easyexam.mapper.QuestionService;
 import com.company.easyexam.model.Question;
+import com.company.easyexam.model.Rate;
 import com.company.easyexam.model.Tags;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,32 +15,28 @@ import java.util.List;
 @RequestMapping("/question")
 public class QuestionController {
 
-//    @Autowired
-//    private QuestionRepository questionRepository;
-
     @Autowired
     private QuestionService questionService;
 
-//    @Autowired
-//    private QuestionServiceImpl questionServiceImpl;
-
-
-//    @GetMapping("/exam/{tag1}/{tag2}")
-//    public List<Question> getCollectionOfQuestions(@PathVariable String tag1,@PathVariable String tag2){
-//
-//        List<String> tags = new ArrayList<>();
-//        tags.add(tag1);
-//        tags.add(tag2);
-//        List<Question> list;
-//        list = questionService.getCollection(2,tags);
-//        return list;
-//    }
 
     @PostMapping("exam/{size}")
-//    @CrossOrigin(origins = "http://localhost:3000")
-    public List<Question> getCollectionOfQuestions(@RequestBody final Tags tags, @PathVariable int size){
+    public List<Question> getCollectionOfQuestionsForExam(@RequestBody final Tags tags, @PathVariable int size){
         List<String> tagList = tags.getTags();
-        return questionService.getCollection(size,tagList);
+        return questionService.getCollectionForExam(size,tagList);
     }
+
+    @PostMapping("challenge/{size}")
+    public List<Question> getCollectionOfQuestionsForChallenge(@RequestBody final Tags tags, @PathVariable int size){
+        List<String> tagList = tags.getTags();
+        return questionService.getCollectionForChallenge(size,tagList);
+    }
+
+    @PostMapping("rate")
+    public void setRatings(@RequestBody final List<Rate> rates){
+
+        questionService.setRating(rates);
+    }
+
+
 
 }
