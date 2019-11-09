@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,9 +64,9 @@ public  class QuestionServiceImpl implements QuestionService {
 
             Question question = questionRepository.findQuestionsById(rate.getId());
 
-            Integer currentAverage = question.getRate();
+            Double currentAverage = question.getRating();
             Integer rateTimes = question.getRateTimes() + 1;
-            Integer newAverage = currentAverage + ((rate.getRating() - currentAverage) / rateTimes);
+            Double newAverage = currentAverage + ((rate.getRating() - currentAverage) / rateTimes);
 
 
             mongoTemplate

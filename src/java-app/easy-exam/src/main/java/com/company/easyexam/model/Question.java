@@ -4,9 +4,6 @@ package com.company.easyexam.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.util.Date;
@@ -21,18 +18,18 @@ public class Question {
     private String description;
     private String answer;
     private Integer rateTimes;
-    private Integer rate;
+    private Double rating;
     private String author;
     private Date date;
     private List<String> tags;
 
 
 
-    public Question( String description, String answer,Integer rateTimes,Integer rate, String author,Date date, List<String> tags) {
+    public Question(String description, String answer, Integer rateTimes, Double rate, String author, Date date, List<String> tags) {
         this.description = description;
         this.answer = answer;
         this.rateTimes=rateTimes;
-        this.rate = rate;
+        this.rating = rate;
         this.author = author;
         this.date=date;
         this.tags = tags;
@@ -50,9 +47,9 @@ public class Question {
         this.rateTimes = rateTimes;
     }
 
-    public Integer getRate() {return rate;}
+    public Double getRating() {return rating;}
 
-    public void setRate(Integer rate) {this.rate = rate;}
+    public void setRating(Double rating) {this.rating = rating;}
 
     public Date getDate() {
         return date;
@@ -108,6 +105,6 @@ public class Question {
 
     public void updateRate(Integer rating){
         addRateTimes();
-        this.rate= this.rate + ((rating- this.rate)/ this.rateTimes);
+        this.rating = this.rating + ((rating- this.rating)/ this.rateTimes);
     }
 }
