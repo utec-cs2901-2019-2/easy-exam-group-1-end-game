@@ -15,11 +15,17 @@ const useStyles = makeStyles({
     }
 });
 
+var config = {
+    headers : {
+          'Authorization' : `Bearer ${localStorage.getItem('token')}`
+        }
+  }
+
 export default props => {
 
     const classes = useStyles();
     const [user, setUser] = useState({username:'', password: ''});
-    const  { auth,setAuth }  = useContext(AuthContext);
+    const  { auth,setAuth, userContext, setUserContext }  = useContext(AuthContext);
 
     function postLogin () {
         axios.post("http://localhost:8080/auth/login/", {
@@ -30,14 +36,30 @@ export default props => {
                 // setAuthToken(result.data.token, true)
                 localStorage.setItem("token", result.data.token);
                 setAuth(true);
+                getUser();
             }
         }).catch(e => {
-            console.log("problemas")
+            console.log(e);
         });
     }
+    
+    function getUser() {
+        axios.get('http://localhost:8080/user/'+user.username, config)
+            .then (
+            r => {
+                setUserContext({name: r.data.name,
+                                lastn: r.data.lastName,
+                                rol: r.data.rol,
+                                uni: r.data.university});
+            });
+    }
 
-    if (auth) {
-        return <Redirect to="/home" />;
+    if (auth && userContext.rol === "student") {
+        return <Redirect to="/student" />;
+    }
+
+    if (auth && userContext.rol === "teacher") {
+        return <Redirect to="/teacher" />
     }
 
     return (
@@ -45,7 +67,7 @@ export default props => {
         <Box>Easy Exam - Login</Box>
         <Box><TextField
             id="username"
-            label="Username or Email"
+            label="Username"
             margin="normal"
             value={user.username}
             onInput={e => setUser({username: e.target.value, password: user.password})}
@@ -65,7 +87,6 @@ export default props => {
         <Box ><Button className={classes.general} color="primary" variant="contained" onClick={postLogin} >Login</Button></Box>
         <Box ><Link to="/signup"><Button className={classes.general} variant="contained" >Sign Up</Button></Link></Box>
         <Box ><Button className={classes.general}>Forget your password?</Button></Box>
-        <Box>{user.username} {user.password}</Box>
     </Container>
         )
 }

@@ -29,10 +29,8 @@ import axios from 'axios';
 var postdata = {
       "tags" : ["mate"]
 }
-let config = {
+var config = {
   headers : {
-        'Content-Type' : 'application/json',
-        'Access-Control-Allow-Origin': '*',
         'Authorization' : `Bearer ${localStorage.getItem('token')}`
       }
 }
