@@ -19,6 +19,7 @@ public class QuestionController {
     private QuestionService questionService;
 
 
+
     @PostMapping("exam/{size}")
     public List<Question> getCollectionOfQuestionsForExam(@RequestBody final Tags tags, @PathVariable int size){
         List<String> tagList = tags.getTags();
@@ -27,7 +28,7 @@ public class QuestionController {
 
     @PostMapping("challenge/{size}")
     public List<Question> getCollectionOfQuestionsForChallenge(@RequestBody final Tags tags, @PathVariable int size){
-        List<String> tagList = tags.getTags();
+       List<String> tagList = tags.getTags();
         return questionService.getCollectionForChallenge(size,tagList);
     }
 
