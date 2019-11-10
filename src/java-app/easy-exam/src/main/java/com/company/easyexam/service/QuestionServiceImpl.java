@@ -2,6 +2,7 @@ package com.company.easyexam.service;
 
 import com.company.easyexam.mapper.QuestionService;
 import com.company.easyexam.model.Question;
+import com.company.easyexam.model.QuestionPosted;
 import com.company.easyexam.model.Rate;
 import com.company.easyexam.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 
-import javax.swing.text.html.parser.Entity;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,11 +36,24 @@ public  class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getCollectionForExam(int size, List<String> tags) {
 
+
+
         List<Question> questionList = questionRepository.findQuestionsByTagsContaining(tags);
         List<Question> newList = new ArrayList<>(size);
 
         for (int index = 0; index < size; index++) {
-            newList.add(questionList.get(index));
+
+            Date questionDate = questionList.get(index).getDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(questionDate);
+            calendar.add(Calendar.DATE,30);
+            Date questionDatePlus30 = calendar.getTime();
+
+            Date currentDate = new Date();
+
+            if(currentDate.after(questionDatePlus30))
+                newList.add(questionList.get(index));
+
         }
 
 
@@ -65,14 +81,14 @@ public  class QuestionServiceImpl implements QuestionService {
 
             Question question = questionRepository.findQuestionsById(rate.getId());
 
-            Integer currentAverage = question.getRate();
+            Double currentAverage = question.getRating();
             Integer rateTimes = question.getRateTimes() + 1;
-            Integer newAverage = currentAverage + ((rate.getRating() - currentAverage) / rateTimes);
+            Double newAverage = currentAverage + ((rate.getRating() - currentAverage) / rateTimes);
 
 
             mongoTemplate
                     .updateFirst(Query.query(Criteria.where("id").is(rate.getId())),
-                            Update.update("rate", newAverage), Question.class);
+                            Update.update("rating", newAverage), Question.class);
 
             mongoTemplate
                     .updateFirst(Query.query(Criteria.where("id").is(rate.getId())),
@@ -81,5 +97,17 @@ public  class QuestionServiceImpl implements QuestionService {
         }
     }
 
+
+    @Override
+    public void postQuestions(List<QuestionPosted> questions){
+
+        Date currentDate = new Date();
+
+        for (QuestionPosted question: questions) {
+            Question newQuestion = new Question(question.getDescription(),question.getAnswer(),0,0.0,question.getAuthor(),currentDate,question.getTags());
+            mongoTemplate.save(newQuestion,"Question");
+        }
+
+    }
 
 }

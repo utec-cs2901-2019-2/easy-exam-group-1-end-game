@@ -2,6 +2,7 @@ package com.company.easyexam.web;
 
 import com.company.easyexam.mapper.QuestionService;
 import com.company.easyexam.model.Question;
+import com.company.easyexam.model.QuestionPosted;
 import com.company.easyexam.model.Rate;
 import com.company.easyexam.model.Tags;
 import org.bson.types.ObjectId;
@@ -34,8 +35,12 @@ public class QuestionController {
 
     @PostMapping("rate")
     public void setRatings(@RequestBody final List<Rate> rates){
-
         questionService.updateRating(rates);
+    }
+
+    @PostMapping("post")
+    public void postQuestion(@RequestBody final List<QuestionPosted> questions){
+        questionService.postQuestions(questions);
     }
 
 
