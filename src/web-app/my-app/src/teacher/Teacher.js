@@ -13,30 +13,19 @@ import ExamInfo from './ExamInfo';
 import SubmitQuestions from './SubmitQuestions';
 import ReviewDownload from './ReviewDownload';
 import axios from 'axios';
-
-// ({
-//   method: 'POST',
-//   url: 'http://localhost:8080/question/exam/1',
-//   headers : {
-//     'Content-Type' : 'application/json',
-//     'Authorization' : `Bearer ${localStorage.getItem('token')}`
-//   },
-//   data : {
-//     "tags" : ["mate"]
-//   }
-// })
+import validateToken from '../service/Validator';
   
 var postdata = {
       "tags" : ["mate"]
 }
-var config = {
-  headers : {
-        'Authorization' : `Bearer ${localStorage.getItem('token')}`
-      }
-}
 
 const ListOfTags = () => {
-  return axios.post('http://localhost:8080/question/exam/1', postdata, config).then( r => {
+
+  return axios.post('http://localhost:8080/question/exam/1', postdata, {
+    headers: {
+      "Authorization" : "Bearer "+localStorage.getItem("token")
+    }
+  }).then( r => {
     console.log(r);
   });
 }
@@ -100,7 +89,12 @@ export default function Checkout() {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     //here we apply the tags
-    ListOfTags();
+    if (validateToken()) {
+      ListOfTags();
+    } else {
+      alert("Sesión expirada, vuelva a logearse");
+    }
+    
   };
 
   const handleBack = () => {
