@@ -95,7 +95,7 @@ headers : {
 }
 
 const ListOfQuestions = () => {
-return axios.post('http://localhost:8080/question/exam/1', postdata, config).then( r => {
+return axios.post('http://localhost:8080/question/exam/2', postdata, config).then( r => {
   console.log(r);
 });
 }
