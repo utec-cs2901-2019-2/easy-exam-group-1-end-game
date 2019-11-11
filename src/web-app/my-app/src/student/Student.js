@@ -1,10 +1,7 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams,
   useRouteMatch
 } from "react-router-dom";
 import Home from './Home';
@@ -15,7 +12,7 @@ import Copyrights from '../components/Copyrights';
 
 export default props => {
 
-  let { path, url } = useRouteMatch();
+  let {path} = useRouteMatch();
 
   return (
     <div>

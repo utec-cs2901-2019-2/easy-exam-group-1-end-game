@@ -24,7 +24,7 @@ export default props => {
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             EasyExam
           </Typography>
-          <Button href="#" color="white" variant="outlined" className={classes.link}>
+          <Button href="#" color="inherit" variant="outlined" className={classes.link}>
             Logout
           </Button>
         </Toolbar>
