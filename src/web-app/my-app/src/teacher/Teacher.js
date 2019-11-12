@@ -1,8 +1,10 @@
 import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
 import AppBar from '../components/AppBar';
 import Copyright from '../components/Copyrights';
+
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -152,7 +154,9 @@ export default function Checkout() {
           </React.Fragment>
         </Paper>
       </main>
+
       <Copyright/>
+
     </React.Fragment>
   );
 }

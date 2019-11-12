@@ -14,10 +14,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public  class QuestionServiceImpl implements QuestionService {
@@ -28,6 +26,11 @@ public  class QuestionServiceImpl implements QuestionService {
     @Autowired
     private final MongoTemplate mongoTemplate;
 
+    private enum RatingLabel {
+        HIGH_RATING,
+        LOW_RATING
+    }
+
     public QuestionServiceImpl(@Autowired final MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
@@ -36,42 +39,44 @@ public  class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getCollectionForExam(int size, List<String> tags) {
 
-
-
         List<Question> questionList = questionRepository.findQuestionsByTagsContaining(tags);
-        List<Question> newList = new ArrayList<>(size);
+        List<Question> questionFilteredByDate = filterQuestionsByDate(questionList);
+        List<Question> questionFilteredByDateAndMatchScore = filterQuestionsByMatchScore(questionFilteredByDate,tags);
+        List<Question> questionFilteredByDateAndMatchScoreAndRating = filterQuestionsByRating(questionFilteredByDateAndMatchScore,RatingLabel.HIGH_RATING);
 
-        for (int index = 0; index < size; index++) {
+        if(size != -1) {
+            List<Question> finalList = new ArrayList<>(size);
 
-            Date questionDate = questionList.get(index).getDate();
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(questionDate);
-            calendar.add(Calendar.DATE,30);
-            Date questionDatePlus30 = calendar.getTime();
-
-            Date currentDate = new Date();
-
-            if(currentDate.after(questionDatePlus30))
-                newList.add(questionList.get(index));
-
+            for (int index = 0; index < size; index++) {
+                finalList.add(questionFilteredByDateAndMatchScoreAndRating.get(index));
+            }
+            return finalList;
         }
-
-
-        return newList;
+        else{
+            return questionFilteredByDateAndMatchScoreAndRating;
+        }
     }
 
     @Override
     public List<Question> getCollectionForChallenge(int size, List<String> tags) {
 
         List<Question> questionList = questionRepository.findQuestionsByTagsContaining(tags);
-        List<Question> newList = new ArrayList<>(size);
+        List<Question> questionFilteredByDate = filterQuestionsByDate(questionList);
+        List<Question> questionFilteredByDateAndMatchScore = filterQuestionsByMatchScore(questionFilteredByDate,tags);
+        List<Question> questionFilteredByDateAndMatchScoreAndRating = filterQuestionsByRating(questionFilteredByDateAndMatchScore,RatingLabel.LOW_RATING);
 
-        for (int index = 0; index < size; index++) {
-            newList.add(questionList.get(index));
+        if(size != -1) {
+            List<Question> finalList = new ArrayList<>(size);
+
+            for (int index = 0; index < size; index++) {
+                finalList.add(questionFilteredByDateAndMatchScoreAndRating.get(index));
+            }
+            return finalList;
+        }
+        else{
+            return questionFilteredByDateAndMatchScoreAndRating;
         }
 
-
-        return newList;
     }
 
     @Override
@@ -108,6 +113,85 @@ public  class QuestionServiceImpl implements QuestionService {
             mongoTemplate.save(newQuestion,"Question");
         //}
 
+    }
+
+    @Override
+    public  int calculateScore(List<String> questionTags, List<String> tags){
+        int score = 0;
+        for (String tag1 : questionTags){
+            for(String tag2 : tags){
+                if(tag1.equals(tag2))
+                    score++;
+            }
+        }
+        return score;
+    }
+
+    @Override
+    public List<Question> filterQuestionsByDate(List<Question> questions) {
+
+        List<Question> newList =  new ArrayList<>();
+
+        for(Question question:questions) {
+            Date questionDate = question.getDate();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(questionDate);
+            calendar.add(Calendar.DATE, 30);
+            Date questionDatePlus30 = calendar.getTime();
+
+            Date currentDate = new Date();
+
+            if (currentDate.after(questionDatePlus30))
+                newList.add(question);
+        }
+        return newList;
+    }
+
+    @Override
+    public List<Question> filterQuestionsByMatchScore(List<Question> questions,List<String>tags) {
+        Map< Question, Integer> hm = new HashMap<>();
+        for(Question question : questions){
+            int score = calculateScore(question.getTags(),tags);
+            hm.put(question,score);
+        }
+        Map< Question,Integer> hmSortedByValue = hm.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+        int median = (int) Math.round(hmSortedByValue.size()/2.0);
+        int cont = 0;
+        List<Question> finalList =  new ArrayList<>(median);
+
+        for (Map.Entry<Question,Integer> entry : hmSortedByValue.entrySet()){
+
+            if(cont<median) {
+                finalList.add(entry.getKey());
+                cont++;
+            }else{
+                break;
+            }
+        }
+        return finalList;
+    }
+
+    public List<Question> filterQuestionsByRating(List<Question> questions,RatingLabel label) {
+        List<Question> newList = new ArrayList<>();
+
+        if(label==RatingLabel.HIGH_RATING){
+            for( Question question : questions){
+                if(question.getRating()>3.5)
+                    newList.add(question);
+            }
+        }
+        else{
+            for( Question question : questions){
+                if(question.getRating()<=3.5)
+                    newList.add(question);
+            }
+        }
+
+        return newList;
     }
 
 }
