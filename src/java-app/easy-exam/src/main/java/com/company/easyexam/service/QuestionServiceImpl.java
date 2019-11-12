@@ -26,6 +26,11 @@ public  class QuestionServiceImpl implements QuestionService {
     @Autowired
     private final MongoTemplate mongoTemplate;
 
+    private enum RatingLabel {
+        HIGH_RATING,
+        LOW_RATING
+    }
+
     public QuestionServiceImpl(@Autowired final MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
@@ -34,22 +39,21 @@ public  class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getCollectionForExam(int size, List<String> tags) {
 
-
-
         List<Question> questionList = questionRepository.findQuestionsByTagsContaining(tags);
         List<Question> questionFilteredByDate = filterQuestionsByDate(questionList);
         List<Question> questionFilteredByDateAndMatchScore = filterQuestionsByMatchScore(questionFilteredByDate,tags);
+        List<Question> questionFilteredByDateAndMatchScoreAndRating = filterQuestionsByRating(questionFilteredByDateAndMatchScore,RatingLabel.HIGH_RATING);
 
         if(size != -1) {
             List<Question> finalList = new ArrayList<>(size);
 
             for (int index = 0; index < size; index++) {
-                finalList.add(questionFilteredByDateAndMatchScore.get(index));
+                finalList.add(questionFilteredByDateAndMatchScoreAndRating.get(index));
             }
             return finalList;
         }
         else{
-            return questionFilteredByDateAndMatchScore;
+            return questionFilteredByDateAndMatchScoreAndRating;
         }
     }
 
@@ -57,14 +61,22 @@ public  class QuestionServiceImpl implements QuestionService {
     public List<Question> getCollectionForChallenge(int size, List<String> tags) {
 
         List<Question> questionList = questionRepository.findQuestionsByTagsContaining(tags);
-        List<Question> newList = new ArrayList<>(size);
+        List<Question> questionFilteredByDate = filterQuestionsByDate(questionList);
+        List<Question> questionFilteredByDateAndMatchScore = filterQuestionsByMatchScore(questionFilteredByDate,tags);
+        List<Question> questionFilteredByDateAndMatchScoreAndRating = filterQuestionsByRating(questionFilteredByDateAndMatchScore,RatingLabel.LOW_RATING);
 
-        for (int index = 0; index < size; index++) {
-            newList.add(questionList.get(index));
+        if(size != -1) {
+            List<Question> finalList = new ArrayList<>(size);
+
+            for (int index = 0; index < size; index++) {
+                finalList.add(questionFilteredByDateAndMatchScoreAndRating.get(index));
+            }
+            return finalList;
+        }
+        else{
+            return questionFilteredByDateAndMatchScoreAndRating;
         }
 
-
-        return newList;
     }
 
     @Override
@@ -161,6 +173,25 @@ public  class QuestionServiceImpl implements QuestionService {
             }
         }
         return finalList;
+    }
+
+    public List<Question> filterQuestionsByRating(List<Question> questions,RatingLabel label) {
+        List<Question> newList = new ArrayList<>();
+
+        if(label==RatingLabel.HIGH_RATING){
+            for( Question question : questions){
+                if(question.getRating()>3.5)
+                    newList.add(question);
+            }
+        }
+        else{
+            for( Question question : questions){
+                if(question.getRating()<=3.5)
+                    newList.add(question);
+            }
+        }
+
+        return newList;
     }
 
 }
