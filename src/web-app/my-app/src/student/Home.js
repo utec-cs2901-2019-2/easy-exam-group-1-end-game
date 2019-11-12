@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -8,10 +8,13 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Box from '@material-ui/core/Box';
+import  {ListOfQuestions} from "../handlers/listOfQuestion"
 import axios from 'axios';
 import {
     Link as LinkReact
   } from "react-router-dom";
+import {QuestionsContext} from '../context/Questions';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -68,27 +71,33 @@ export default function Challenge() {
   const [name, setName] = React.useState();
   const [array,setArray] = React.useState([]);
   const labelRef = React.useRef(null);
+  const  { arr, setArr }  = useContext(QuestionsContext);
+  const [number,setNumber] = React.useState();
+  const [num,setNum] = React.useState();
 
-  var postdata = {
-    "tags" : array
-}
-let config = {
-headers : {
-      'Content-Type' : 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Authorization' : `Bearer ${localStorage.getItem('token')}`
+
+
+
+
+const listofQuestions = (num,array) => {
+  ListOfQuestions(num,array).then(r=>{
+    let list = []
+    for(let elements of r.data){      
+      list.push(elements)
     }
-}
+    
+    setArr(list)
+    setArray(list)
+  })
 
-const ListOfQuestions = () => {
-return axios.post('http://localhost:8080/question/exam/1', postdata, config).then( r => {
-  console.log(r);
-});
-}
+} 
+
+ 
 
   React.useEffect(() => {
     setLabelWidth(labelRef.current.offsetWidth);
-  }, []);
+
+  });
 
   const handleChange = ({ target }) => {
     setName(target.value);
@@ -96,12 +105,19 @@ return axios.post('http://localhost:8080/question/exam/1', postdata, config).the
 
   const handleButton = () => {
     setArray(array.concat(name));
-    console.log(array);
   }
 
   const handleNext = () => {
-    ListOfQuestions();
+    listofQuestions(num,array);
   };
+
+  const handleNumber = ({target}) => {
+    setNumber(target.value);
+  }
+
+  const handleClick = () =>{
+    setNum(number);
+  }
 
 
   return (
@@ -117,7 +133,7 @@ return axios.post('http://localhost:8080/question/exam/1', postdata, config).the
       </Container>
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="center">
-        <Grid item xs={6}>
+        <Grid item xs>
             <FormControl className={classes.formControl} variant="outlined">
                 <InputLabel ref={labelRef} htmlFor="component-outlined">
                     Tags
@@ -130,32 +146,60 @@ return axios.post('http://localhost:8080/question/exam/1', postdata, config).the
                 />
             </FormControl>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs>
             <Button href="#" color="primary" variant="outlined" onClick={handleButton}>
             Add
           </Button>
           </Grid>
+          <Grid item xs>
+            <FormControl className={classes.formControl} variant="outlined">
+                <InputLabel ref={labelRef} htmlFor="component-outlined">
+                    Number of Questions
+                </InputLabel>
+                <OutlinedInput
+                    id="component-outlined2"
+                    value={number}
+                    onChange={handleNumber}
+                    labelWidth={labelWidth}
+                />
+            </FormControl>
         </Grid>
+        <Grid item xs>
+            <Button href="#" color="primary" variant="outlined" onClick={handleClick}>
+            Add
+          </Button>
+          </Grid>
+        </Grid>
+        
       </Container>
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
-      <Grid container spacing={5} justify="center" alignItems="center">
+      <Grid container spacing={5} justify="center" alignItems="center" direction="row">
       {array.map(item=>{
-       return <Grid item xs={12} direction="row">
-         {item}
+       return <Grid item xs={4}>
+       <Box color="white" bgcolor="palevioletred" p={1}>
+       {item}
+        </Box>
         </Grid>
       })}
-      <Grid item xs={12}>
+      </Grid>
+      <center>
+      <Grid iterm xs={12}>
+        {num}
+      </Grid>
+      </center>
+      </Container>
+      <Container maxWidth="sm" component="main" className={classes.heroContent}>
       <LinkReact to="student/challenge">
+      <center>
       <Button variant="contained"
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}>
           Go
       </Button>
+      </center>
       </LinkReact>
-      </Grid>
-      </Grid>
       </Container>
     </React.Fragment>
   );

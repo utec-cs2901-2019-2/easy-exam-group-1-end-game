@@ -8,6 +8,7 @@ import Home from './Home';
 import Challenge from './Challenge';
 import AppBar from '../components/AppBar';
 import Copyrights from '../components/Copyrights';
+import QuestionProvider from '../context/Questions';
 
 
 export default props => {
@@ -16,6 +17,7 @@ export default props => {
 
   return (
     <div>
+    <QuestionProvider>
     <AppBar/>
     <Switch>
       <Route exact path={path}>
@@ -26,6 +28,7 @@ export default props => {
       </Route>
     </Switch>
     <Copyrights/>
+    </QuestionProvider>
     </div>
   )
 }
