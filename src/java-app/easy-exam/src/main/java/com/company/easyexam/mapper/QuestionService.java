@@ -15,4 +15,7 @@ public interface QuestionService {
     public abstract List<Question> getCollectionForChallenge( int size ,List<String> tags);
     public abstract void updateRating(List<Rate> rates);
     public abstract void postQuestions(List<QuestionPosted> questions);
+    public abstract int calculateScore(List<String> questionTags, List<String> tags);
+    public abstract List<Question> filterQuestionsByDate(List<Question>questions);
+    public abstract List<Question> filterQuestionsByMatchScore(List<Question>questions,List<String>tags);
 }
