@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface QuestionRepository extends MongoRepository<Question,String> {
-    Question findQuestionsById(ObjectId id);
+    Question findQuestionsById(String id);
     List<Question> findQuestionsByTagsContaining(List<String> tags);
 
 }
