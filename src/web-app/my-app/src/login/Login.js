@@ -34,6 +34,7 @@ export default props => {
         }).then( result => {
             if(result.status === 200) {
                 localStorage.setItem("token", result.data.token);
+                console.log(result.data.token);
                 setAuth(true);
                 getUser();
             }
