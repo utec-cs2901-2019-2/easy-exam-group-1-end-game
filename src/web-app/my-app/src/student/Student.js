@@ -1,18 +1,17 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
+import Home from './Home';
+import Challenge from './Challenge';
+import AppBar from '../components/AppBar';
+import Copyrights from '../components/Copyrights';
+
 
 function Copyright() {
   return (
@@ -100,91 +99,23 @@ return axios.post('http://localhost:8080/question/exam/2', postdata, config).the
 });
 }
 
-  React.useEffect(() => {
-    setLabelWidth(labelRef.current.offsetWidth);
-  }, []);
 
-  const handleChange = ({ target }) => {
-    setName(target.value);
-  };
+export default props => {
 
-  const handleButton = () => {
-    setArray(array.concat(name));
-    console.log(array);
-  }
-
-  const handleNext = () => {
-    ListOfQuestions();
-  };
-
+  let { path, url } = useRouteMatch();
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppBar position="static" color="primary" elevation={0} className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            EasyExam
-          </Typography>
-          <Button href="#" color="white" variant="outlined" className={classes.link}>
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
-      {/* Hero unit */}
-      <Container maxWidth="sm" component="main" className={classes.heroContent}>
-        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-          Challenge
-        </Typography>
-        <Typography variant="h5" align="center" color="textSecondary" component="p">
-          Quickly build a challenge in the topic you want to practice! Write down the topic below and we'll generate a challenge with the questions that best fit for you.
-        </Typography>
-      </Container>
-      {/* End hero unit */}
-      <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="center">
-        <Grid item xs={6}>
-            <FormControl className={classes.formControl} variant="outlined">
-                <InputLabel ref={labelRef} htmlFor="component-outlined">
-                    Tags
-                </InputLabel>
-                <OutlinedInput
-                    id="component-outlined"
-                    value={name}
-                    onChange={handleChange}
-                    labelWidth={labelWidth}
-                />
-            </FormControl>
-        </Grid>
-        <Grid item xs={6}>
-            <Button href="#" color="primary" variant="outlined" onClick={handleButton}>
-            Add
-          </Button>
-          </Grid>
-        </Grid>
-      </Container>
-      {/* Footer */}
-      <Container maxWidth="md" component="footer" className={classes.footer}>
-      <Grid container spacing={12} justify="center" alignItems="center">
-      {array.map(item=>{
-       return <Grid item xs={12} direction="row">
-         {item}
-        </Grid>
-      })}
-      <Grid item xs={12}>
-      <Button variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}>
-          Go
-      </Button>
-
-      </Grid>
-      </Grid>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
-    </React.Fragment>
-  );
+    <div>
+    <AppBar/>
+    <Switch>
+      <Route exact path={path}>
+        <Home></Home>
+      </Route>
+      <Route  path={`${path}/challenge`}>
+        <Challenge></Challenge>
+      </Route>
+    </Switch>
+    <Copyrights/>
+    </div>
+  )
 }
