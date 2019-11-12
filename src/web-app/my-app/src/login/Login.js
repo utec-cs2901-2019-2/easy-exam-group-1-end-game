@@ -15,11 +15,6 @@ const useStyles = makeStyles({
     }
 });
 
-var config = {
-    headers : {
-          'Authorization' : `Bearer ${localStorage.getItem('token')}`
-        }
-  }
 
 export default props => {
 

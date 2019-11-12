@@ -39,8 +39,8 @@ public class QuestionController {
     }
 
     @PostMapping("post")
-    public void postQuestion(@RequestBody final List<QuestionPosted> questions){
-        questionService.postQuestions(questions);
+    public void postQuestion(@RequestBody final QuestionPosted question){
+        questionService.postQuestions(question);
     }
 
 

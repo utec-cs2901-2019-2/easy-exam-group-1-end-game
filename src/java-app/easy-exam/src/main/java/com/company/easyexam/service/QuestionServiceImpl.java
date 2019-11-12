@@ -99,14 +99,14 @@ public  class QuestionServiceImpl implements QuestionService {
 
 
     @Override
-    public void postQuestions(List<QuestionPosted> questions){
+    public void postQuestions(QuestionPosted question){
 
         Date currentDate = new Date();
 
-        for (QuestionPosted question: questions) {
+        //for (QuestionPosted question: questions) {
             Question newQuestion = new Question(question.getDescription(),question.getAnswer(),0,0.0,question.getAuthor(),currentDate,question.getTags());
             mongoTemplate.save(newQuestion,"Question");
-        }
+        //}
 
     }
 
