@@ -1,5 +1,5 @@
 import React from 'react';
-import Teacher from './teacher/Teacher';
+import HomeTeacher from './teacher/Home';
 import Student from './student/Student';
 import Login from './login/Login'
 import SignUp from './signup/Signup'
@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/signup">
             <SignUp/>
           </Route>
-          <PrivateRoute path="/teacher" component={Teacher} />
+          <PrivateRoute path="/teacher" component={HomeTeacher} />
           <PrivateRoute path="/student" component={Student} />
         </Switch>
     </Router>

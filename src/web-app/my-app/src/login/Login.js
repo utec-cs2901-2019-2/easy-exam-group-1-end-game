@@ -15,11 +15,6 @@ const useStyles = makeStyles({
     }
 });
 
-var config = {
-    headers : {
-          'Authorization' : `Bearer ${localStorage.getItem('token')}`
-        }
-  }
 
 export default props => {
 
@@ -44,7 +39,11 @@ export default props => {
     }
     
     function getUser() {
-        axios.get('http://localhost:8080/user/'+user.username, config)
+        axios.get('http://localhost:8080/user/'+user.username, {
+            headers: {
+                "Authorization" : "Bearer "+localStorage.getItem("token")
+            }
+        })
             .then (
             r => {
                 setUserContext({name: r.data.name,

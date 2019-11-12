@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -14,35 +14,11 @@ import Typography from '@material-ui/core/Typography';
 import ExamInfo from './ExamInfo';
 import SubmitQuestions from './SubmitQuestions';
 import ReviewDownload from './ReviewDownload';
+import { TeacherContext } from '../context/Teacher';
 import axios from 'axios';
-
-// ({
-//   method: 'POST',
-//   url: 'http://localhost:8080/question/exam/1',
-//   headers : {
-//     'Content-Type' : 'application/json',
-//     'Authorization' : `Bearer ${localStorage.getItem('token')}`
-//   },
-//   data : {
-//     "tags" : ["mate"]
-//   }
-// })
+import validateToken from '../service/Validator';
+import { AuthContext } from '../context/Auth';
   
-var postdata = {
-      "tags" : ["mate"]
-}
-var config = {
-  headers : {
-        'Authorization' : `Bearer ${localStorage.getItem('token')}`
-      }
-}
-
-const ListOfTags = () => {
-  return axios.post('http://localhost:8080/question/exam/1', postdata, config).then( r => {
-    console.log(r);
-  });
-}
-
 const useStyles = makeStyles(theme => ({
   appBar: {
     position: 'relative',
@@ -98,11 +74,29 @@ function getStepContent(step) {
 export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const { setAuth }  = useContext(AuthContext);
+  const { tags, setQuestions, count } = useContext(TeacherContext);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     //here we apply the tags
-    ListOfTags();
+    if (activeStep === 0) {
+      if (validateToken()) {
+        axios.post("http://localhost:8080/question/exam/"+count, {tags}, {
+          headers: {
+            "Authorization" : "Bearer "+localStorage.getItem("token")
+          }
+        })
+        .then(
+          r => {
+            setQuestions(r.data);
+          }
+        );
+      } else {
+        alert("Tu sesión ha expirado");
+        setAuth(false);
+      }
+    }
   };
 
   const handleBack = () => {
@@ -115,8 +109,6 @@ export default function Checkout() {
       <CssBaseline />
 
       <AppBar></AppBar>
-
-
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
