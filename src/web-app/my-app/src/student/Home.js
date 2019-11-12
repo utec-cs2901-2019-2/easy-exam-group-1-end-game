@@ -8,13 +8,12 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Box from '@material-ui/core/Box';
 import  {ListOfQuestions} from "../handlers/listOfQuestion"
-import axios from 'axios';
 import {
     Link as LinkReact
   } from "react-router-dom";
 import {QuestionsContext} from '../context/Questions';
+import { Fab } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -71,13 +70,9 @@ export default function Challenge() {
   const [name, setName] = React.useState();
   const [array,setArray] = React.useState([]);
   const labelRef = React.useRef(null);
-  const  { arr, setArr }  = useContext(QuestionsContext);
+  const  { setArr,num, setNum }  = useContext(QuestionsContext);
   const [number,setNumber] = React.useState();
-  const [num,setNum] = React.useState();
-
-
-
-
+  //const [num,setNum] = React.useState();
 
 const listofQuestions = (num,array) => {
   ListOfQuestions(num,array).then(r=>{
@@ -97,7 +92,7 @@ const listofQuestions = (num,array) => {
   React.useEffect(() => {
     setLabelWidth(labelRef.current.offsetWidth);
 
-  });
+  },[]);
 
   const handleChange = ({ target }) => {
     setName(target.value);
@@ -140,7 +135,7 @@ const listofQuestions = (num,array) => {
                 </InputLabel>
                 <OutlinedInput
                     id="component-outlined"
-                    value={name}
+                    value={name || ''}
                     onChange={handleChange}
                     labelWidth={labelWidth}
                 />
@@ -158,7 +153,7 @@ const listofQuestions = (num,array) => {
                 </InputLabel>
                 <OutlinedInput
                     id="component-outlined2"
-                    value={number}
+                    value={number || ''}
                     onChange={handleNumber}
                     labelWidth={labelWidth}
                 />
@@ -177,15 +172,17 @@ const listofQuestions = (num,array) => {
       <Grid container spacing={5} justify="center" alignItems="center" direction="row">
       {array.map(item=>{
        return <Grid item xs={4}>
-       <Box color="white" bgcolor="palevioletred" p={1}>
+       <Fab variant="extended">
        {item}
-        </Box>
+       </Fab>
         </Grid>
       })}
       </Grid>
       <center>
-      <Grid iterm xs={12}>
+      <Grid item xs={12}>
+      <Fab variant="extended">
         {num}
+        </Fab>
       </Grid>
       </center>
       </Container>
