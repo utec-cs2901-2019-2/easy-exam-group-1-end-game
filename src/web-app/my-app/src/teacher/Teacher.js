@@ -73,7 +73,7 @@ export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const { setAuth }  = useContext(AuthContext);
-  const { tags, setQuestions, count, setPostedQuestions } = useContext(TeacherContext);
+  const { tags, setQuestions, count } = useContext(TeacherContext);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -95,27 +95,6 @@ export default function Checkout() {
         setAuth(false);
       }
     }
-
-    if (activeStep === 1) {
-      if (validateToken()) {
-        axios.post("http://localhost:8080/question/post", {
-          
-        }, {
-          headers: {
-            "Authorization" : "Bearer "+localStorage.getItem("token")
-          }
-        })
-        .then(
-          r => {
-            setQuestions(r.data);
-          }
-        );
-      } else {
-        alert("Tu sesión ha expirado");
-        setAuth(false);
-      }
-    }
-    
   };
 
   const handleBack = () => {

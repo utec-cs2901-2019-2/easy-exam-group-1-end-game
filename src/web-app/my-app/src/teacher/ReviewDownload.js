@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
+import { TeacherContext } from '../context/Teacher';
 
 const products = [
   { name: 'Question 1', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae.', price: '$9.99' },
@@ -37,6 +38,7 @@ const useStyles = makeStyles(theme => ({
 export default function Review() {
   const classes = useStyles();
   const [value, setValue] = React.useState(2);
+  const { questions } = useContext(TeacherContext);
 
   return (
     <React.Fragment>

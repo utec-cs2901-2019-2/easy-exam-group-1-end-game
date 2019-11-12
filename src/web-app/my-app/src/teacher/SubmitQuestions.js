@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Button, 
          Fab,
          TextField,
@@ -8,7 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import SendIcon from '@material-ui/icons/Send';
 import { TeacherContext } from '../context/Teacher';
+import validateToken from '../service/Validator';
 import { AuthContext } from '../context/Auth';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   send : {
@@ -25,7 +27,7 @@ export default function SubmitQuestion() {
 
   const [tag, setTag] = useState("");
   const [postedTags, setPostedTags] = useState([])
-  const { userContext } = useContext(AuthContext)
+  const { setAuth,userContext } = useContext(AuthContext)
   const [question, setQuestion] = useState({
     description: '',
     answer: '',
@@ -37,7 +39,35 @@ export default function SubmitQuestion() {
     setPostedTags(postedTags.concat(tag));
   };
 
+  useEffect(() => {
+    setQuestion({...question, tags: postedTags });
+  },[postedTags]);  //si hay algun cambio en postedTags afectamos tambien a question
+
+
   //sendQuestion
+  const postQuestion = () => {
+    setQuestion({ ...question,
+      description: question.description,
+      answer: question.answer,
+      author: userContext.name+" "+userContext.lastn
+    })
+    if (validateToken()) {
+      axios.post("http://localhost:8080/question/post",
+        question, {
+        headers: {
+          "Authorization" : "Bearer "+localStorage.getItem("token")
+        }
+      })
+      .then(
+        r => {
+          console.log(r.data);
+        }
+      );
+    } else {
+      alert("Tu sesión ha expirado");
+      setAuth(false);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -88,6 +118,7 @@ export default function SubmitQuestion() {
             color="primary"
             variant="contained" 
             startIcon={<SendIcon/>}
+            onClick={postQuestion}
           >Send</Button>
         </Grid>
         <Grid item xs={12}>

@@ -24,6 +24,7 @@ public class QuestionController {
     @PostMapping("exam/{size}")
     public List<Question> getCollectionOfQuestionsForExam(@RequestBody final Tags tags, @PathVariable int size){
         List<String> tagList = tags.getTags();
+        /** convertir questionService.getCollectionForExam(size,tagList) a txt **/
         return questionService.getCollectionForExam(size,tagList);
     }
 
