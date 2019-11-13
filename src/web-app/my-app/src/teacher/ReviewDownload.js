@@ -9,12 +9,6 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import { TeacherContext } from '../context/Teacher';
 
-const products = [
-  { name: 'Question 1', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae.', price: '$9.99' },
-  { name: 'Question 2', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae.', price: '$3.45' },
-  { name: 'Question 3', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae.', price: '$6.51' },
-  { name: 'Question 4', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae.', price: '$14.11' },
-];
 
 const payments = [
   { name: 'Exam Name', detail: 'PC1' },
@@ -37,8 +31,15 @@ const useStyles = makeStyles(theme => ({
 
 export default function Review() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(2);
-  const { questions } = useContext(TeacherContext);
+  const { questions, setQuestions } = useContext(TeacherContext);
+
+  function setRating(newValue, index) {
+    //setValue(newValue);
+    let questionsRated = [...questions];
+    questionsRated[index].rating = newValue;
+    console.log(newValue, "  "+ index);
+    setQuestions(questionsRated);
+  }
 
   return (
     <React.Fragment>
@@ -46,19 +47,19 @@ export default function Review() {
         Review summary
       </Typography>
       <List disablePadding>
-        {products.map(product => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Box component="fieldset" mb={3} borderColor="transparent">
+        {questions.map( (q,index) => (
+          <ListItem className={classes.listItem} key={index}>
+            <ListItemText primary={q.description} secondary={q.answer} /> 
               <Typography component="legend">Rating</Typography>
               <Rating
                 name="rating-id"
-                value={value}
+                value={q.rating}
                 onChange={(event, newValue) => {
-                  setValue(newValue);
+                  //console.log(index);
+                  //setRating(newValue, index);
                 }}
               />
-            </Box>
+            
           </ListItem>
         ))}
       </List>
