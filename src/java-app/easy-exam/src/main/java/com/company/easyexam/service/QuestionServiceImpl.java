@@ -46,9 +46,10 @@ public  class QuestionServiceImpl implements QuestionService {
 
         if(size != -1) {
             List<Question> finalList = new ArrayList<>(size);
-
-            for (int index = 0; index < size; index++) {
-                finalList.add(questionFilteredByDateAndMatchScoreAndRating.get(index));
+            if(size<=questionFilteredByDateAndMatchScoreAndRating.size()) {
+                for (int index = 0; index < size; index++) {
+                    finalList.add(questionFilteredByDateAndMatchScoreAndRating.get(index));
+                }
             }
             return finalList;
         }
@@ -159,7 +160,8 @@ public  class QuestionServiceImpl implements QuestionService {
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
-        int median = (int) Math.round(hmSortedByValue.size()/2.0);
+//        int median = (int) Math.round(hmSortedByValue.size()/2.0);
+        int median = hmSortedByValue.size();
         int cont = 0;
         List<Question> finalList =  new ArrayList<>(median);
 
