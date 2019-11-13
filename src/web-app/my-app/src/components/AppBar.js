@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
+import { AuthContext } from '../context/Auth';
 
 const useStyles = makeStyles(theme => ({
   toolbarTitle: {
@@ -15,6 +16,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default props => {
+  
+  const {setAuth, setUserContext} = useContext(AuthContext);
+
+  function logout() {
+    localStorage.removeItem("token");
+    setAuth(false);
+    setUserContext({name: "", lastn: "", rol: "", uni: ""});
+  }
 
     const classes = useStyles();
 
@@ -24,7 +33,7 @@ export default props => {
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
             EasyExam
           </Typography>
-          <Button href="#" color="inherit" variant="outlined" className={classes.link}>
+          <Button variant="contained" className={classes.link} onClick={logout}>
             Logout
           </Button>
         </Toolbar>

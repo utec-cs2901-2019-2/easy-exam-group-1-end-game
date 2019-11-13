@@ -1,24 +1,23 @@
 package com.company.easyexam.model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import org.bson.types.ObjectId;
 
 @JsonAutoDetect
 public class Rate {
 
-    private ObjectId id;
+    private String id;
     private Integer rating;
 
-    public Rate(ObjectId id, Integer rating) {
+    public Rate(String id, Integer rating) {
         this.id = id;
         this.rating = rating;
     }
 
-    public ObjectId getId() {
-        return id;
+    public String getId() {
+        return this.id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

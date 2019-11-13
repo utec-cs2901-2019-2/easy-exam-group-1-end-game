@@ -15,11 +15,6 @@ const useStyles = makeStyles({
     }
 });
 
-var config = {
-    headers : {
-          'Authorization' : `Bearer ${localStorage.getItem('token')}`
-        }
-  }
 
 export default props => {
 
@@ -34,6 +29,7 @@ export default props => {
         }).then( result => {
             if(result.status === 200) {
                 localStorage.setItem("token", result.data.token);
+                console.log(result.data.token);
                 setAuth(true);
                 getUser();
             }
@@ -43,7 +39,11 @@ export default props => {
     }
     
     function getUser() {
-        axios.get('http://localhost:8080/user/'+user.username, config)
+        axios.get('http://localhost:8080/user/'+user.username, {
+            headers: {
+                "Authorization" : "Bearer "+localStorage.getItem("token")
+            }
+        })
             .then (
             r => {
                 setUserContext({name: r.data.name,

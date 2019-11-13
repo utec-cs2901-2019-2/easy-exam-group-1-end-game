@@ -24,6 +24,7 @@ public class QuestionController {
     @PostMapping("exam/{size}")
     public List<Question> getCollectionOfQuestionsForExam(@RequestBody final Tags tags, @PathVariable int size){
         List<String> tagList = tags.getTags();
+        /** convertir questionService.getCollectionForExam(size,tagList) a txt **/
         return questionService.getCollectionForExam(size,tagList);
     }
 
@@ -39,8 +40,8 @@ public class QuestionController {
     }
 
     @PostMapping("post")
-    public void postQuestion(@RequestBody final List<QuestionPosted> questions){
-        questionService.postQuestions(questions);
+    public void postQuestion(@RequestBody final QuestionPosted question){
+        questionService.postQuestions(question);
     }
 
 

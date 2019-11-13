@@ -10,7 +10,6 @@ import AppBar from '../components/AppBar';
 import Copyrights from '../components/Copyrights';
 import QuestionProvider from '../context/Questions';
 
-
 export default props => {
 
   let {path} = useRouteMatch();
