@@ -15,6 +15,7 @@ import {
   } from "react-router-dom";
 import {QuestionsContext} from '../context/Questions';
 import { Fab } from '@material-ui/core';
+import validateToken from '../service/Validator';
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -73,6 +74,10 @@ let config = {
       }
   }
 
+const headers = {
+  "Authorization" : "Bearer "+localStorage.getItem("token")
+}
+
 export default function Challenge() {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -84,7 +89,8 @@ export default function Challenge() {
   //const [num,setNum] = React.useState();
 
 const listofQuestions = (num,array) => {
-  return axios.post('http://localhost:8080/question/exam/' + num, {"tags":array}, config).then(r=>{
+  if(validateToken()){
+    return axios.post('http://localhost:8080/question/exam/' + num, {"tags":array}, headers).then(r=>{
     console.log(r);
     let list = []
     if(r.lenght !== 0){
@@ -95,6 +101,7 @@ const listofQuestions = (num,array) => {
     setArr(list)
     setArray(list)
   })
+  }
 
 } 
 
