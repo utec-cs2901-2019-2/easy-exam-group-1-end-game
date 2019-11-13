@@ -10,9 +10,11 @@
 
 ## **v.1.4**
 * Post Exercises (w/ answers) : ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
-* Review exercises (student): ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
-* Review Exam (teacher): ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
+* Display Exam : ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
+* Display Exercises : ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
 
 ## **v2.0**
+* Review exercises (student): ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
+* Review Exam (teacher): ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
 * Download exam w/ Answears : ***Jose Chavez*** and ***Jeffrey Orihuela*** and ***Herless Alvarado***
 
