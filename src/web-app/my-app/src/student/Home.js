@@ -8,7 +8,8 @@ import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
-import  {ListOfQuestions} from "../handlers/listOfQuestion"
+import axios from "axios";
+//import  {ListOfQuestions} from "../handlers/listOfQuestion"
 import {
     Link as LinkReact
   } from "react-router-dom";
@@ -64,6 +65,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+let config = {
+  headers : {
+        'Content-Type' : 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Authorization' : `Bearer ${localStorage.getItem('token')}`
+      }
+  }
+
 export default function Challenge() {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -75,12 +84,14 @@ export default function Challenge() {
   //const [num,setNum] = React.useState();
 
 const listofQuestions = (num,array) => {
-  ListOfQuestions(num,array).then(r=>{
+  return axios.post('http://localhost:8080/question/exam/' + num, {"tags":array}, config).then(r=>{
+    console.log(r);
     let list = []
-    for(let elements of r.data){      
-      list.push(elements)
+    if(r.lenght !== 0){
+      for(let elements of r.data){      
+        list.push(elements)
+      }
     }
-    
     setArr(list)
     setArray(list)
   })

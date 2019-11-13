@@ -13,6 +13,9 @@ export default function Cha(){
     }
 
     return(
+      (arr.lenght === 0) ? <div>
+        No hay preguntas
+</div> :
       <div>
       <div>
        <ul>
