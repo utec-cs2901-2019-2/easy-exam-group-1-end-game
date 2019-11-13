@@ -79,7 +79,7 @@ export default function Challenge() {
 const listofQuestions = (num,array) => {
   if(validateToken()){
     if (validateToken()) {
-      axios.post("http://localhost:8080/question/exam/"+num, {tags:array}, {
+      axios.post("http://localhost:8080/question/challenge/"+num, {tags:array}, {
         headers: {
           "Authorization" : "Bearer "+localStorage.getItem("token")
         }
