@@ -33,9 +33,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-
 export default function ExamInfo() {
   const classes = useStyles();
   const { tags, setTags, count, setNumberQuestions } = useContext(TeacherContext);
