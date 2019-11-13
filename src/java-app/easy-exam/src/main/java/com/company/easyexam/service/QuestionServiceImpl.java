@@ -62,20 +62,20 @@ public  class QuestionServiceImpl implements QuestionService {
     public List<Question> getCollectionForChallenge(int size, List<String> tags) {
 
         List<Question> questionList = questionRepository.findQuestionsByTagsContaining(tags);
-        List<Question> questionFilteredByDate = filterQuestionsByDate(questionList);
-        List<Question> questionFilteredByDateAndMatchScore = filterQuestionsByMatchScore(questionFilteredByDate,tags);
-        List<Question> questionFilteredByDateAndMatchScoreAndRating = filterQuestionsByRating(questionFilteredByDateAndMatchScore,RatingLabel.LOW_RATING);
+        List<Question> questionFilteredByMatchScore = filterQuestionsByMatchScore(questionList,tags);
+        List<Question> questionFilteredByMatchScoreAndRating = filterQuestionsByRating(questionFilteredByMatchScore,RatingLabel.LOW_RATING);
 
         if(size != -1) {
             List<Question> finalList = new ArrayList<>(size);
-
-            for (int index = 0; index < size; index++) {
-                finalList.add(questionFilteredByDateAndMatchScoreAndRating.get(index));
+            if(size<=questionFilteredByMatchScoreAndRating.size()){
+                for (int index = 0; index < size; index++) {
+                    finalList.add(questionFilteredByMatchScoreAndRating.get(index));
+                }
             }
             return finalList;
         }
         else{
-            return questionFilteredByDateAndMatchScoreAndRating;
+            return questionFilteredByMatchScoreAndRating;
         }
 
     }
