@@ -21,12 +21,13 @@ export default function Cha(){
   const classes = useStyles();
     const  { arr }  = useContext(QuestionsContext);
     const [counter,setCounter] = useState(0);
-    const [rate,setRate] = useState(0);
+    const [value, setValue] = React.useState(2);
+    const [id, setId] = React.useState("");
 
     const setRating = () =>{
       if(validateToken()){
         if (validateToken()) {
-          axios.post("http://localhost:8080/question/rate", [{id:"5dc9945bc637d16c28843893",rating:5}], {
+          axios.post("http://localhost:8080/question/rate", [{id:id,rating:value}], {
             headers: {
               "Authorization" : "Bearer "+localStorage.getItem("token")
             }
@@ -68,11 +69,11 @@ export default function Cha(){
          <center>
        <Rating className={classes.root}
                 name="rating-id"
-                //value={q.rating}
-                //onChange={(event, newValue) => {
-                  //console.log(index);
-                  //setRating(newValue, index);
-                //}}
+                value={value}
+                onChange={(event, newValue) => {
+                setValue(newValue);
+                setId(item.id)
+          }}
               />
           </center>
        </div>
