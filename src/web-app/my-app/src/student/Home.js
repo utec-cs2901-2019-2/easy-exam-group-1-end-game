@@ -84,7 +84,6 @@ const listofQuestions = (num,array) => {
           "Authorization" : "Bearer "+localStorage.getItem("token")
         }
       }).then(r=>{
-    console.log(" ",r);
     let list = []
     if(r.lenght !== 0){
       for(let elements of r.data){      
@@ -93,6 +92,7 @@ const listofQuestions = (num,array) => {
     }
     setArr(list)
     setArray(list)
+    console.log(r);
   })
   }
 
