@@ -66,13 +66,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-let config = {
-  headers : {
-        'Content-Type' : 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Authorization' : `Bearer ${localStorage.getItem('token')}`
-      }
-  }
 
 const headers = {
   "Authorization" : "Bearer "+localStorage.getItem("token")
