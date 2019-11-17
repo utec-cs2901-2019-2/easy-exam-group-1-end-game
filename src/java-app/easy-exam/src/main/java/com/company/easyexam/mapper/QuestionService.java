@@ -1,5 +1,6 @@
 package com.company.easyexam.mapper;
 
+import com.company.easyexam.model.Ids;
 import com.company.easyexam.model.Question;
 import com.company.easyexam.model.QuestionPosted;
 import com.company.easyexam.model.Rate;
@@ -13,11 +14,9 @@ public interface QuestionService {
 
     public abstract List<Question> getCollectionForExam( int size ,List<String> tags);
     public abstract List<Question> getCollectionForChallenge( int size ,List<String> tags);
+    public abstract List<Question> getQuestionsById(List<Ids> ids);
     public abstract void updateRating(List<Rate> rates);
-
     public abstract void postQuestions(QuestionPosted question);
-
-    
     public abstract int calculateScore(List<String> questionTags, List<String> tags);
     public abstract List<Question> filterQuestionsByDate(List<Question>questions);
     public abstract List<Question> filterQuestionsByMatchScore(List<Question>questions,List<String>tags);
