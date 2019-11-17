@@ -1,7 +1,6 @@
 package com.company.easyexam.service;
 
 import com.company.easyexam.mapper.QuestionService;
-import com.company.easyexam.model.Ids;
 import com.company.easyexam.model.Question;
 import com.company.easyexam.model.QuestionPosted;
 import com.company.easyexam.model.Rate;
@@ -81,16 +80,7 @@ public  class QuestionServiceImpl implements QuestionService {
 
     }
 
-    @Override
-    public List<Question> getQuestionsById(List<Ids> ids) {
-        List<Question> questionList = new ArrayList<>();
-        for (Ids id:ids
-             ) {
-            Question findedQuestion =  questionRepository.findQuestionById(id.getId());
-            questionList.add(findedQuestion);
-        }
-        return questionList;
-    }
+
 
     @Override
     public void updateRating(List<Rate> rates) {

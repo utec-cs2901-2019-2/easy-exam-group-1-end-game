@@ -2,7 +2,7 @@ package com.company.easyexam.web;
 
 import com.company.easyexam.mapper.DownloadService;
 import com.company.easyexam.mapper.QuestionService;
-import com.company.easyexam.model.Ids;
+import com.company.easyexam.model.ExamDetails;
 import com.company.easyexam.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -31,10 +31,9 @@ public class DownloadController {
     DownloadService downloadService;
 
     @PostMapping("exam")
-    public ResponseEntity<InputStreamResource> downloadFile(@RequestBody List<Ids> list) throws FileNotFoundException {
-        List<Question> questions = questionService.getQuestionsById(list);
+    public ResponseEntity<InputStreamResource> downloadFile(@RequestBody ExamDetails details) throws FileNotFoundException {
 
-        downloadService.buildFile(questions);
+        downloadService.buildFile(details);
 
         downloadService.executeScript("src/main/java/com/company/easyexam/media/compile.sh");
 
