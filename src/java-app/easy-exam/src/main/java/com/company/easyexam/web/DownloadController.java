@@ -3,7 +3,6 @@ package com.company.easyexam.web;
 import com.company.easyexam.mapper.DownloadService;
 import com.company.easyexam.mapper.QuestionService;
 import com.company.easyexam.model.ExamDetails;
-import com.company.easyexam.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/download")
@@ -33,13 +31,13 @@ public class DownloadController {
     @PostMapping("exam")
     public ResponseEntity<InputStreamResource> downloadFile(@RequestBody ExamDetails details) throws FileNotFoundException {
 
-        downloadService.buildFile(details);
+        downloadService.buildFiles(details);
 
         downloadService.executeScript("src/main/java/com/company/easyexam/media/compile.sh");
 
-        String filePath = "src/main/java/com/company/easyexam/media/MyEasyExam.pdf";
+        String zipPath = "src/main/java/com/company/easyexam/media/Easy_Exam.zip";
 
-        File file = new File(filePath);
+        File file = new File(zipPath);
         HttpHeaders respHeaders = new HttpHeaders();
         MediaType mediaType = MediaType.parseMediaType("application/pdf");
         respHeaders.setContentType(mediaType);

@@ -6,6 +6,8 @@ import com.company.easyexam.model.Question;
 import java.util.List;
 
 public interface DownloadService {
-    public abstract void buildFile(ExamDetails examDetails);
+    public abstract void buildFiles(ExamDetails examDetails);
     public abstract void executeScript(String pathToScript);
+    public abstract void buildExam(ExamDetails examDetails);
+    public abstract void  buildAnswer(ExamDetails examDetails);
 }

@@ -13,27 +13,9 @@ import java.util.List;
 public class DownloadServiceImpl implements DownloadService {
 
     @Override
-    public void buildFile(ExamDetails examDetails) {
-        writeInFile(" "+examDetails.getUniversityName()+" \\par}");
-        writeInFile("\n\\vspace{1cm}");
-        writeInFile("{\n\\scshape\\Large Exam\\par}");
-        writeInFile("\n\\vspace{1.5cm}");
-        writeInFile("\n{\\huge\\bfseries "+ examDetails.getExamName()+" \\par}");
-        writeInFile("\n\\vspace{2cm}");
-        writeInFile("{\n\\Large\\itshape "+ examDetails.getTeacherName()+ " \\par}");
-        writeInFile("\\vfill");
-        writeInFile("{\\large \\today\\par}\n" + "\\end{titlepage}");
-        writeInFile("\\section*{Problems}\n" +
-                "\\begin{enumerate}");
-
-        for (QuestionToCompile question:examDetails.getQuestionToCompileList()
-             ) {
-            String item = "\\item "+question.getDescription()+"\n";
-            writeInFile(item);
-        }
-        writeInFile("\\end{enumerate}\n");
-        writeInFile("\\end{document}");
-
+    public void buildFiles(ExamDetails examDetails) {
+        buildExam(examDetails);
+        buildAnswer(examDetails);
     }
 
     @Override
@@ -41,8 +23,56 @@ public class DownloadServiceImpl implements DownloadService {
         readBashScript(pathToScript);
     }
 
-    private static void writeInFile(String data) {
-        File file = new File("src/main/java/com/company/easyexam/media/main.tex");
+    @Override
+    public void buildExam(ExamDetails examDetails) {
+        String filePath = "src/main/java/com/company/easyexam/media/exam.tex";
+        writeInFile(" "+examDetails.getUniversityName()+" \\par}",filePath);
+        writeInFile("\n\\vspace{1cm}",filePath);
+        writeInFile("{\n\\scshape\\Large Exam\\par}",filePath);
+        writeInFile("\n\\vspace{1.5cm}",filePath);
+        writeInFile("\n{\\huge\\bfseries "+ examDetails.getExamName()+" \\par}",filePath);
+        writeInFile("\n\\vspace{2cm}",filePath);
+        writeInFile("{\\Large\\itshape "+ examDetails.getTeacherName()+ " \\par}",filePath);
+        writeInFile("\n\\vfill\n",filePath);
+        writeInFile("{\\large \\today\\par}\n" + "\\end{titlepage}\n",filePath);
+        writeInFile("\\section*{Problems}\n" +
+                "\\begin{enumerate}",filePath);
+
+        for (QuestionToCompile question:examDetails.getQuestionToCompileList()
+        ) {
+            String item = "\\item "+question.getDescription()+"\n";
+            writeInFile(item,filePath);
+        }
+        writeInFile("\\end{enumerate}\n",filePath);
+        writeInFile("\\end{document}",filePath);
+    }
+
+    @Override
+    public void buildAnswer(ExamDetails examDetails) {
+        String filePath = "src/main/java/com/company/easyexam/media/answer.tex";
+        writeInFile(" "+examDetails.getUniversityName()+" \\par}",filePath);
+        writeInFile("\n\\vspace{1cm}",filePath);
+        writeInFile("{\n\\scshape\\Large Solutions\\par}",filePath);
+        writeInFile("\n\\vspace{1.5cm}",filePath);
+        writeInFile("\n{\\huge\\bfseries "+ examDetails.getExamName()+" \\par}",filePath);
+        writeInFile("\n\\vspace{2cm}",filePath);
+        writeInFile("{\\Large\\itshape "+ examDetails.getTeacherName()+ " \\par}",filePath);
+        writeInFile("\n\\vfill\n",filePath);
+        writeInFile("{\\large \\today\\par}\n" + "\\end{titlepage}\n",filePath);
+        writeInFile("\\section*{Problems}\n" +
+                "\\begin{enumerate}",filePath);
+
+        for (QuestionToCompile question:examDetails.getQuestionToCompileList()
+        ) {
+            String item = "\\item "+question.getAnswer()+"\n";
+            writeInFile(item,filePath);
+        }
+        writeInFile("\\end{enumerate}\n",filePath);
+        writeInFile("\\end{document}",filePath);
+    }
+
+    private static void writeInFile(String data,String filePath) {
+        File file = new File(filePath);
         FileWriter fr = null;
         try {
             fr = new FileWriter(file,true);
@@ -59,7 +89,7 @@ public class DownloadServiceImpl implements DownloadService {
         }
     }
 
-    public static void readBashScript(String script) {
+    private static void readBashScript(String script) {
         try {
             Process proc = Runtime.getRuntime().exec(script); //Whatever you want to execute
             BufferedReader read = new BufferedReader(new InputStreamReader(
