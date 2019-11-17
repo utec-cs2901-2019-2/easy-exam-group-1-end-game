@@ -1,7 +1,9 @@
 package com.company.easyexam.service;
 
 import com.company.easyexam.mapper.DownloadService;
+import com.company.easyexam.model.ExamDetails;
 import com.company.easyexam.model.Question;
+import com.company.easyexam.model.QuestionToCompile;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -9,9 +11,22 @@ import java.util.List;
 
 @Service
 public class DownloadServiceImpl implements DownloadService {
+
     @Override
-    public void buildFile(List<Question> questionList) {
-        for (Question question:questionList
+    public void buildFile(ExamDetails examDetails) {
+        writeInFile(" "+examDetails.getUniversityName()+" \\par}");
+        writeInFile("\n\\vspace{1cm}");
+        writeInFile("{\n\\scshape\\Large Exam\\par}");
+        writeInFile("\n\\vspace{1.5cm}");
+        writeInFile("\n{\\huge\\bfseries "+ examDetails.getExamName()+" \\par}");
+        writeInFile("\n\\vspace{2cm}");
+        writeInFile("{\n\\Large\\itshape "+ examDetails.getTeacherName()+ " \\par}");
+        writeInFile("\\vfill");
+        writeInFile("{\\large \\today\\par}\n" + "\\end{titlepage}");
+        writeInFile("\\section*{Problems}\n" +
+                "\\begin{enumerate}");
+
+        for (QuestionToCompile question:examDetails.getQuestionToCompileList()
              ) {
             String item = "\\item "+question.getDescription()+"\n";
             writeInFile(item);
