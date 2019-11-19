@@ -80,12 +80,14 @@ public  class QuestionServiceImpl implements QuestionService {
 
     }
 
+
+
     @Override
     public void updateRating(List<Rate> rates) {
 
         for (Rate rate : rates) {
 
-            Question question = questionRepository.findQuestionsById(rate.getId());
+            Question question = questionRepository.findQuestionById(rate.getId());
 
             Double currentAverage = question.getRating();
             Integer rateTimes = question.getRateTimes() + 1;

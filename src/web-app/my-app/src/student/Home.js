@@ -65,12 +65,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }));
-
-
-const headers = {
-  "Authorization" : "Bearer "+localStorage.getItem("token")
-}
-
 export default function Challenge() {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -83,8 +77,12 @@ export default function Challenge() {
 
 const listofQuestions = (num,array) => {
   if(validateToken()){
-    return axios.post('http://localhost:8080/question/exam/' + num, {"tags":array}, headers).then(r=>{
-    console.log(r);
+    if (validateToken()) {
+      axios.post("http://localhost:8080/question/challenge/"+num, {tags:array}, {
+        headers: {
+          "Authorization" : "Bearer "+localStorage.getItem("token")
+        }
+      }).then(r=>{
     let list = []
     if(r.lenght !== 0){
       for(let elements of r.data){      
@@ -93,10 +91,11 @@ const listofQuestions = (num,array) => {
     }
     setArr(list)
     setArray(list)
+    console.log(r);
   })
   }
 
-} 
+} }
 
  
 
