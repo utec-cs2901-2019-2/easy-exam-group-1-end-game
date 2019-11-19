@@ -5,6 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 import { TeacherContext } from '../context/Teacher';
 
@@ -30,8 +31,23 @@ const useStyles = makeStyles(theme => ({
 
 export default function Review() {
   const classes = useStyles();
-  const { questions, setQuestions } = useContext(TeacherContext);
+  const { questions, setQuestions, setDisable } = useContext(TeacherContext);
   const [rates, setRates] = useState([])
+  const [flag, setFlag] = useState(0)  
+
+  useEffect(()=>{
+    //if (rates.length === questions.length) {
+      for (let index = 0; index < rates.length; index++) {
+        if ( rates[index] === true) {
+          setFlag(flag+1);
+          console.log(flag)
+        }
+      }
+      if(flag === 3) {
+        setDisable(false)
+      }
+    //}
+  },[rates])
   
 
   return (
@@ -39,6 +55,7 @@ export default function Review() {
       <Typography variant="h6" gutterBottom>
         Review summary
       </Typography>
+      <Box>Please rate all questions to download your Easy Exam</Box>
       <List disablePadding>
         {questions.map( (question ,index) => (
           <ListItem className={classes.listItem} key={index}>

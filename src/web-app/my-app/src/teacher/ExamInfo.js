@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { TeacherContext } from '../context/Teacher';
-import { Button, Fab } from '@material-ui/core';
+import { Button, Fab, Box } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(theme => ({
@@ -55,13 +55,17 @@ export default function ExamInfo() {
     } else {
       setDisable(true);
     }
-  }, [info, tag, count])
+  }, [info, tag, count, tags])
   
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Complete the form
       </Typography>
+      <div>
+        Please fill white fields to pass the next step. You need to add tags according 
+        to the subject that you want and write a number of desired question. 
+      </div>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -156,6 +160,9 @@ export default function ExamInfo() {
         />
         </Grid>
       </Grid>
+      <Box className={classes.noLabel} >
+      *If you need to delete a tag just click to the tag button.
+      </Box>
       <Grid item xs={12}>
         {
           tags.map( (tag,index) => (
