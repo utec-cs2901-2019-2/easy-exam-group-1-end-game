@@ -43,8 +43,8 @@ export default function Review() {
           console.log(flag)
         }
       }
-      if(flag === 3) {
-        setDisable(false)
+      if(flag === rates.length) {
+        //setDisable(false)
       }
     //}
   },[rates])

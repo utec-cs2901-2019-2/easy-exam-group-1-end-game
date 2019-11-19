@@ -75,7 +75,7 @@ export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const { setAuth }  = useContext(AuthContext);
-  const { tags, setQuestions, count, disable, setDisable } = useContext(TeacherContext);
+  const { tags, questions, setQuestions, count, disable, setDisable, info } = useContext(TeacherContext);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -97,6 +97,44 @@ export default function Checkout() {
         setAuth(false);
       }
     }
+
+    if(activeStep === steps.length - 1){
+      var questionsToCompile = [];
+      for(let i = 0; i < Object.keys(questions).length; i++) {
+        questionsToCompile = questionsToCompile.concat({
+          description: questions[i].description,
+          answer: questions[i].answer
+        });
+      }
+      if(validateToken()) {
+
+        axios.post("http://localhost:8080/download/exam", {
+          questionToCompileList: questionsToCompile,
+          teacherName: info.name+" "+info.last,
+          examName: info.exam,
+          universityName: info.univ
+        },{
+          headers: {
+            "Authorization" : "Bearer "+localStorage.getItem("token")
+          },
+          responseType: 'blob',
+        })
+        .then( ({ data }) => {
+          const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.setAttribute('download', 'file.zip'); //any other extension
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+  
+        })
+      } else {
+        alert("Tu sesión ha expirado");
+        setAuth(false);
+      }
+    }
+
     setDisable(true);
   };
 
