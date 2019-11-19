@@ -65,7 +65,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }));
-
 export default function Challenge() {
   const classes = useStyles();
   const [labelWidth, setLabelWidth] = React.useState(0);

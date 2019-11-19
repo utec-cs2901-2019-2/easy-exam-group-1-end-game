@@ -75,7 +75,7 @@ export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const { setAuth }  = useContext(AuthContext);
-  const { tags, setQuestions, count } = useContext(TeacherContext);
+  const { tags, setQuestions, count, disable, setDisable } = useContext(TeacherContext);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -97,6 +97,7 @@ export default function Checkout() {
         setAuth(false);
       }
     }
+    setDisable(true);
   };
 
   const handleBack = () => {
@@ -144,6 +145,7 @@ export default function Checkout() {
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
+                    disabled = {disable}
                     className={classes.button}
                   >
                     {activeStep === steps.length - 1 ? 'Download pdf' : 'Next'}
