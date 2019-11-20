@@ -54,6 +54,7 @@ export default function SubmitQuestion() {
   useEffect(() => {
     if(left === 0) {
       setDisable(false);
+      setSend(true);
     }
   },[left]);
 
@@ -74,6 +75,8 @@ export default function SubmitQuestion() {
       .then(
         r => {
           setLeft(left-1);
+          setPostedTags([]);
+          setQuestion({});
         }
       );
     } else {
