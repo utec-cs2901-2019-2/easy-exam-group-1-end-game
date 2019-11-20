@@ -36,9 +36,7 @@ export default function Review() {
   const [flag, setFlag] = useState(0)  
 
   useEffect(()=>{
-    //if (rates.length === questions.length) {
-      
-    //}
+
   },[rates])
   
 
