@@ -9,14 +9,6 @@ import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 import { TeacherContext } from '../context/Teacher';
 
-
-const payments = [
-  { name: 'Exam Name', detail: 'PC1' },
-  { name: 'Teacher Name', detail: 'Mr Jeremy' },
-  { name: 'University Name', detail: 'UTEC' },
-  { name: 'Questions', detail: '20' },
-];
-
 const useStyles = makeStyles(theme => ({
   listItem: {
     padding: theme.spacing(1, 0),
@@ -31,13 +23,28 @@ const useStyles = makeStyles(theme => ({
 
 export default function Review() {
   const classes = useStyles();
-  const { questions, setQuestions, setDisable } = useContext(TeacherContext);
+  const { questions, setQuestions, setDisable, info } = useContext(TeacherContext);
   const [rates, setRates] = useState([])
-  const [flag, setFlag] = useState(0)  
+  const [flag, setFlag] = useState(0)
+  const [counter,setCounter] = useState(1)
 
   useEffect(()=>{
-
+    for(let i=0; i<rates.length; i++){
+      if(rates[i] !== 0){
+        setCounter(counter+1)
+      }
+    }
+    if(counter === Object.keys(questions).length){
+      setDisable(false)
+    }
   },[rates])
+
+  const payments = [
+    { name: 'Exam Name', detail: info.exam },
+    { name: 'Teacher Name', detail: info.name },
+    { name: 'University Name', detail: info.univ },
+    { name: 'Questions', detail: Object.keys(questions).length },
+  ];
   
 
   return (
