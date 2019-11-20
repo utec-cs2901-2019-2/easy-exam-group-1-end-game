@@ -100,13 +100,28 @@ export default function Checkout() {
 
     if(activeStep === steps.length - 1){
       var questionsToCompile = [];
+      var listRate = [];
       for(let i = 0; i < Object.keys(questions).length; i++) {
         questionsToCompile = questionsToCompile.concat({
           description: questions[i].description,
           answer: questions[i].answer
         });
+        listRate = listRate.concat({
+          id: questions[i].id,
+          rating: questions[i].rating
+        });
       }
+      
       if(validateToken()) {
+        axios.post("http://localhost:8080/question/rate",{
+
+        },{
+          headers: {
+            "Authorization":"Bearer "+localStorage.getItem("token")
+          }
+        }).then( response => {
+          console.log("Now you can download your exam");
+        })
 
         axios.post("http://localhost:8080/download/exam", {
           questionToCompileList: questionsToCompile,
