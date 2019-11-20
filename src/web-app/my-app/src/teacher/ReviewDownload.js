@@ -37,15 +37,7 @@ export default function Review() {
 
   useEffect(()=>{
     //if (rates.length === questions.length) {
-      for (let index = 0; index < rates.length; index++) {
-        if ( rates[index] === true) {
-          setFlag(flag+1);
-          console.log(flag)
-        }
-      }
-      if(flag === 3) {
-        setDisable(false)
-      }
+      
     //}
   },[rates])
   
@@ -63,14 +55,14 @@ export default function Review() {
               <Typography component="legend">Rating</Typography>
               <Rating
                 name={index.toString()}
-                value={question.rating}
+                value={rates[index]}
                 onChange={(event, newValue) => {
                   let copy = [...questions]
                   copy[index].rating = newValue
                   setQuestions(copy)
 
                   let copyRates = [...rates]
-                  copyRates[index] = true
+                  copyRates[index] = newValue
                   setRates(copyRates)
                 }}
               />
