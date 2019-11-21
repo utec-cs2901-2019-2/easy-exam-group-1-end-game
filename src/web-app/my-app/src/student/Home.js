@@ -64,6 +64,12 @@ const useStyles = makeStyles(theme => ({
       paddingBottom: theme.spacing(6),
     },
   },
+  item: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    marginRight: theme.spacing(2),
+    margin: 10
+  }
 }));
 export default function Challenge() {
   const classes = useStyles();
@@ -180,13 +186,20 @@ const listofQuestions = (num,array) => {
       {/* Footer */}
       <Container maxWidth="md" component="footer" className={classes.footer}>
       <Grid container spacing={5} justify="center" alignItems="center" direction="row">
-      {array.map(item=>{
-       return <Grid item xs={4}>
-       <Fab variant="extended">
-       {item}
-       </Fab>
-        </Grid>
-      })}
+      <Grid item xs={12}>
+        {
+          array.map( (tag,index) => (
+            <Button variant="contained" className={classes.item} key={index} 
+              name = {index}
+              onClick={ () => {
+                let copy = [...array]
+                copy.splice(index,1);
+                setArray(copy);
+              }}
+            >{tag}</Button> //click -> delete tag
+          ))
+        }
+      </Grid>
       </Grid>
       <center>
       <Grid item xs={12}>
