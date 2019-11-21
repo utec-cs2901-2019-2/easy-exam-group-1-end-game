@@ -91,7 +91,7 @@ export default function SubmitQuestion() {
         Write your question
       </Typography>
       <Box>
-        You need submit {left} questions to pass the next step
+        You need submit {left} questions to pass the next step.
       </Box>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
@@ -106,6 +106,7 @@ export default function SubmitQuestion() {
           fullWidth />
         </Grid>
         <Grid item xs={12} md={12}>
+        <Box>If you need to write equations you can add latex code with $ (here your equation) $.</Box>
           <TextField required id="answerid" 
           label="Answer"
           value={question.answer || ''}
