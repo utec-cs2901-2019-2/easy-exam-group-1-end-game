@@ -25,7 +25,6 @@ export default function Review() {
   const classes = useStyles();
   const { questions, setQuestions, setDisable, info } = useContext(TeacherContext);
   const [rates, setRates] = useState([])
-  const [flag, setFlag] = useState(0)
   const [counter,setCounter] = useState(1)
 
   useEffect(()=>{

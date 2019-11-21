@@ -61,7 +61,7 @@ export default function Cha(){
          Pregunta {counter+1}: {item.description}
          </Typography>
          
-         <Typography className={classes.root} variant="h3" align="center" color="textPrimary" component="p">
+         <Typography className={classes.root} variant="h5" align="center" color="textPrimary" component="p">
          Respuesta : {item.answer}
          </Typography>
 
