@@ -8,7 +8,8 @@ import AuthContextProvider from './context/Auth';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
   return (
     <AuthContextProvider>
     <Router>
+      <Redirect exact from="/" to="/login"/>
         <Switch>
           <Route path="/login">
             <Login />
