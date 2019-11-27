@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import Logo from "./handshake.jpg"
 import { Button, 
          Fab,
          TextField,
@@ -12,6 +13,7 @@ import { TeacherContext } from '../context/Teacher';
 import validateToken from '../service/Validator';
 import { AuthContext } from '../context/Auth';
 import axios from 'axios';
+import { width } from '@material-ui/system';
 
 const useStyles = makeStyles(theme => ({
   send : {
@@ -87,8 +89,17 @@ export default function SubmitQuestion() {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h4" align="center" gutterBottom>
         Write your question
+      </Typography>
+      {/* <Box>
+          <img style={{width:350, paddingLeft: 140}} src={Logo}/>
+      </Box> */}
+      <Box align = "center">
+        <img style={{width:300}} src={Logo} />
+      </Box>
+      <Typography variant="h6" align="center" gutterBottom>
+        Give 1 question and earn 4!
       </Typography>
       <Box>
         You need submit {left} questions to pass the next step.
