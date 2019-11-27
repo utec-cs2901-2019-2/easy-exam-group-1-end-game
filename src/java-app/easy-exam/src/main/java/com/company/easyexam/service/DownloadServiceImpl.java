@@ -25,7 +25,7 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public void buildExam(ExamDetails examDetails) {
-        String filePath = "src/main/java/com/company/easyexam/media/exam.tex";
+        String filePath = "/opt/easyexam/media/exam.tex";
         writeInFile(" "+examDetails.getUniversityName()+" \\par}",filePath);
         writeInFile("\n\\vspace{1cm}",filePath);
         writeInFile("{\n\\scshape\\Large Exam\\par}",filePath);
@@ -49,7 +49,7 @@ public class DownloadServiceImpl implements DownloadService {
 
     @Override
     public void buildAnswer(ExamDetails examDetails) {
-        String filePath = "src/main/java/com/company/easyexam/media/answer.tex";
+        String filePath = "/opt/easyexam/media/answer.tex";
         writeInFile(" "+examDetails.getUniversityName()+" \\par}",filePath);
         writeInFile("\n\\vspace{1cm}",filePath);
         writeInFile("{\n\\scshape\\Large Solutions\\par}",filePath);

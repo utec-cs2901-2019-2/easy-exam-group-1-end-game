@@ -33,9 +33,9 @@ public class DownloadController {
 
         downloadService.buildFiles(details);
 
-        downloadService.executeScript("src/main/java/com/company/easyexam/media/compile.sh");
+        downloadService.executeScript("/opt/easyexam/compile.sh");
 
-        String zipPath = "src/main/java/com/company/easyexam/media/Easy_Exam.zip";
+        String zipPath = "/opt/easyexam/media/Easy_Exam.zip";
 
         File file = new File(zipPath);
         HttpHeaders respHeaders = new HttpHeaders();

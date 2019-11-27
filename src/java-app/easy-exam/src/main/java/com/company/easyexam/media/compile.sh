@@ -5,39 +5,40 @@
 # author : Jose Chavez
 
 # Cleaning dir
-rm src/main/java/com/company/easyexam/media/output/MyEasyExam.pdf
-rm src/main/java/com/company/easyexam/media/output/Solutions.pdf
-rm src/main/java/com/company/easyexam/media/output/Easy_Exam.zip
+rm /opt/easyexam/media/output/MyEasyExam.pdf
+rm /opt/easyexam/media/output/Solutions.pdf
+rm /opt/easyexam/media/output/Easy_Exam.zip
 
+echo hola
 #Compiling source
-pdflatex  src/main/java/com/company/easyexam/media/exam.tex
+pdflatex  /opt/easyexam/media/exam.tex
 
 #Cleaning logs
 rm exam.aux
 rm exam.log
 
 #Compiling source
-pdflatex  src/main/java/com/company/easyexam/media/answer.tex
+pdflatex  /opt/easyexam/media/answer.tex
 
 #Cleaning logs
 rm answer.aux
 rm answer.log
 
 #Re-making sources
-rm src/main/java/com/company/easyexam/media/exam.tex
-rm src/main/java/com/company/easyexam/media/answer.tex
-cp src/main/java/com/company/easyexam/media/T_exam.tex src/main/java/com/company/easyexam/media/exam.tex
-cp src/main/java/com/company/easyexam/media/T_answer.tex src/main/java/com/company/easyexam/media/answer.tex
+rm /opt/easyexam/media/exam.tex
+rm /opt/easyexam/media/answer.tex
+cp /opt/easyexam/media/T_exam.tex /opt/easyexam/media/exam.tex
+cp /opt/easyexam/media/T_answer.tex /opt/easyexam/media/answer.tex
 
 #Moving & cleaning outputs
-cp exam.pdf src/main/java/com/company/easyexam/media/output/MyEasyExam.pdf
-cp answer.pdf src/main/java/com/company/easyexam/media/output/Solutions.pdf
+cp exam.pdf /opt/easyexam/media/output/MyEasyExam.pdf
+cp answer.pdf /opt/easyexam/media/output/Solutions.pdf
 rm exam.pdf
 rm answer.pdf
 
 #Creating .zip
-zip -r Easy_Exam.zip src/main/java/com/company/easyexam/media/output
-cp Easy_Exam.zip src/main/java/com/company/easyexam/media
+zip -r Easy_Exam.zip /opt/easyexam/media/output
+cp Easy_Exam.zip /opt/easyexam/media
 rm  Easy_Exam.zip
 
 
