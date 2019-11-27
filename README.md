@@ -12,4 +12,4 @@ You will need the following dependencies:
  Once you have this packages, you can start the project with the ***src/run_project.sh*** executable.
  
  * ``` chmod +x run_project.sh ```
- * ``` run_project.sh ```
+ * ``` ./run_project.sh ```
