@@ -8,7 +8,7 @@ You will need the following dependencies:
  * [Gradle](https://gradle.org/)
  * [pdflatex](https://gist.github.com/rain1024/98dd5e2c6c8c28f9ea9d)
  
- Once you have this packages, you can start the project with the ***run_project.sh*** executable.
+ Once you have this packages, you can start the project with the ***src/run_project.sh*** executable.
  
  * ``` chmod +x run_project.sh ```
  * ``` run_project.sh ```
