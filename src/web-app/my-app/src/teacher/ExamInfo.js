@@ -59,12 +59,12 @@ export default function ExamInfo() {
   
   return (
     <React.Fragment>
+      
       <Typography variant="h6" gutterBottom>
         Complete the form
       </Typography>
       <div>
-        Please fill white fields to pass the next step. You need to add tags according 
-        to the subject that you want and write a number of desired question. 
+        Please fill white fields to pass the next step. You can add tags according to the topic you want for your exam.
       </div>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -161,7 +161,7 @@ export default function ExamInfo() {
         </Grid>
       </Grid>
       <Box className={classes.noLabel} >
-      *If you need to delete a tag just click to the tag button.
+      *If you need to delete a tag just click on the tag button.
       </Box>
       <Grid item xs={12}>
         {

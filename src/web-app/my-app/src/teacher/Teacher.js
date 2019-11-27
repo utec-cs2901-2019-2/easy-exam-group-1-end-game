@@ -10,6 +10,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import ExamInfo from './ExamInfo';
 import SubmitQuestions from './SubmitQuestions';
@@ -123,27 +124,27 @@ export default function Checkout() {
           console.log("Now you can download your exam");
         })
 
-        // axios.post("http://localhost:8080/download/exam", {
-        //   questionToCompileList: questionsToCompile,
-        //   teacherName: info.name+" "+info.last,
-        //   examName: info.exam,
-        //   universityName: info.univ
-        // },{
-        //   headers: {
-        //     "Authorization" : "Bearer "+localStorage.getItem("token")
-        //   },
-        //   responseType: 'blob',
-        // })
-        // .then( ({ data }) => {
-        //   const downloadUrl = window.URL.createObjectURL(new Blob([data]));
-        //   const link = document.createElement('a');
-        //   link.href = downloadUrl;
-        //   link.setAttribute('download', 'file.zip'); //any other extension
-        //   document.body.appendChild(link);
-        //   link.click();
-        //   link.remove();
+        axios.post("http://localhost:8080/download/exam", {
+          questionToCompileList: questionsToCompile,
+          teacherName: info.name+" "+info.last,
+          examName: info.exam,
+          universityName: info.univ
+        },{
+          headers: {
+            "Authorization" : "Bearer "+localStorage.getItem("token")
+          },
+          responseType: 'blob',
+        })
+        .then( ({ data }) => {
+          const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.setAttribute('download', 'file.zip'); //any other extension
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
   
-        // })
+        })
       } else {
         alert("Tu sesión ha expirado");
         setAuth(false);
@@ -165,9 +166,12 @@ export default function Checkout() {
       <AppBar></AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Generate Exam
-          </Typography>
+        <Typography variant="h3" align="center" gutterBottom>
+          Welcome to EasyExam
+        </Typography>
+        <Box align="center">
+        A platform where you can generate exams in an easy and collaborative way.
+        </Box>
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map(label => (
               <Step key={label}>
@@ -182,7 +186,7 @@ export default function Checkout() {
                   Thank you for using EasyExam enjoy teaching.
                 </Typography>
                 <Typography variant="subtitle1">
-                  We have emailed you a copy of your exam and don't forget to review your pending questions.
+                  Thanks for using EasyExam.
                 </Typography>
               </React.Fragment>
             ) : (
